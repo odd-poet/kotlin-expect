@@ -1,0 +1,53 @@
+group 'net.oddpoet'
+version '0.1.0-SNAPSHOT'
+
+buildscript {
+    ext {
+        kotlin_version = '1.1.3'
+        junit_version = '4.12'
+        slf4j_version = '1.7.25'
+        logback_version = '1.2.3'
+    }
+
+    repositories {
+        mavenCentral()
+        jcenter()
+        maven { url 'https://plugins.gradle.org/m2/' }
+    }
+
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+apply plugin: 'kotlin'
+apply plugin: 'idea'
+
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile(
+            "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version",
+            "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    )
+
+    testCompile(
+            "org.jetbrains.kotlin:kotlin-test:$kotlin_version",
+            "junit:junit:$junit_version",
+            "org.slf4j:slf4j-api:$slf4j_version",
+            "ch.qos.logback:logback-classic:$logback_version"
+    )
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.6"
+}
+
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.6"
+}
