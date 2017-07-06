@@ -27,21 +27,21 @@ internal constructor(block: () -> Unit) {
      *
      */
     fun <T : Throwable> throws(exceptionClass: KClass<out T>,
-                               clause: (ExpectationClause<T>) -> Unit = {}) {
+                               clause: (T) -> Unit = {}) {
         if (thrown == null) {
             throw AssertionError("expected to occur a exception<$exceptionClass> bu no exception was thrown.")
         }
         if (!exceptionClass.isInstance(thrown)) {
             throw AssertionError("expected <$exceptionClass> to be thrown, but <${thrown::class}> was thrown.", thrown)
         }
-        clause(ExpectationClause(thrown as T))
+        clause(thrown as T)
     }
 
     /**
      * short-cut method.
      *
      */
-    fun throws(clause: (ExpectationClause<Exception>) -> Unit = {}) {
+    fun throws(clause: (Exception) -> Unit = {}) {
         throws(Exception::class, clause)
     }
 }

@@ -2,6 +2,7 @@ package net.oddpoet.expect.extension
 
 import net.oddpoet.expect.AssertionPrintTest
 import net.oddpoet.expect.expect
+import net.oddpoet.expect.should
 import org.junit.Test
 import org.slf4j.LoggerFactory
 
@@ -16,6 +17,15 @@ class AnyExtensionTest : AssertionPrintTest() {
     fun `test value equality`() {
         expect("hello").to.be("hello")
         expect(123).to.not.be(122)
+    }
+
+    @Test
+    fun `test same instance`() {
+        val list1 = listOf(1, 2, 3)
+        val list2 = listOf(1, 2, 3)
+
+        list1.should.equals(list2)
+        list1.should.not.beSameInstance(list2)
     }
 
     @Test

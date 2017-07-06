@@ -9,12 +9,20 @@ import kotlin.reflect.KClass
  * @author Yunsang Choi
  */
 
+infix fun <T : Any> Expect<T>.beSameInstance(value: Any?) =
+        satisfyThat("be same instance of <$value>") {
+            it === value
+        }
+
 infix fun <T : Any> Expect<T>.be(value: Any?) =
         satisfyThat("be <$value>") {
             it == value
         }
 
-infix fun <T : Any> Expect<T>.equal(value: Any?) = be(value)
+infix fun <T : Any> Expect<T>.equal(value: Any?) =
+        satisfyThat("equal <$value>") {
+            it == value
+        }
 
 fun <T : Any> Expect<T>.beNull() =
         satisfyThat("be null") {

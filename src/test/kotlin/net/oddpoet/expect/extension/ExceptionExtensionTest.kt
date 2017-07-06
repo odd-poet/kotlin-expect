@@ -2,6 +2,7 @@ package net.oddpoet.expect.extension
 
 import net.oddpoet.expect.AssertionPrintTest
 import net.oddpoet.expect.expect
+import net.oddpoet.expect.should
 import org.junit.Test
 
 /**
@@ -15,7 +16,7 @@ class ExceptionExtensionTest : AssertionPrintTest() {
         expect {
             throw RuntimeException("forced")
         }.throws {
-            it.should.haveMessage("forced")
+            it.message.should.equal("forced")
         }
     }
 
