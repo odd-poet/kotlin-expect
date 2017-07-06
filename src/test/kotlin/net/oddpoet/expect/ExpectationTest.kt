@@ -6,23 +6,23 @@ import org.slf4j.LoggerFactory
 /**
  * @author Yunsang Choi
  */
-class SubjectExpectationTest {
+class ExpectationTest {
     val log = LoggerFactory.getLogger(this.javaClass)
 
     @Test
-    fun `expect to 형태로 주어진 값에 대해 검증할 수 있다`() {
+    fun `it should used 'expect subj to satisfy' style`() {
         expect("hello").to.satisfy { length == 5 }
     }
 
     @Test
-    fun `expect 한 결과와 다른 경우 assertionError가 발생한다`() {
+    fun `it should throw AssertionError when fail to test`() {
         expect {
             expect(3).to.satisfy { this < 0 }
         }.throws(AssertionError::class)
     }
 
     @Test
-    fun `검증 실패시 발생하는 메시지를 제어할 수 있다`() {
+    fun `it should make you describe assertion message`() {
         expect {
             expect("하이루").to.satisfyThat("be a greeting") {
                 arrayOf("hello", "aloha", "안녕")

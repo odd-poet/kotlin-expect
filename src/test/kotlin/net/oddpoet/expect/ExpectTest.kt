@@ -7,17 +7,17 @@ import org.junit.Test
  */
 class ExpectTest {
     @Test
-    fun `satisfy로 주어진 객체 상태를 검증할 수 있다`() {
+    fun `it should test subject by given predicate`() {
         expect("hello").to.satisfy { length == 5 }
     }
 
     @Test
-    fun `not으로 검증조건의 부정형을 사용할 수 있다`() {
+    fun `it should negative test for subject`() {
         expect(3).to.not.satisfy { this < 1 }
     }
 
     @Test
-    fun `새로운 vocabulary를 정의할 수 있다`() {
+    fun `it should make you define own your vocabulary`() {
         fun <T : Int> Expect<T>.beOddNumber() =
                 satisfyThat("be odd number") {
                     it?.let { it % 2 == 1 } ?: false

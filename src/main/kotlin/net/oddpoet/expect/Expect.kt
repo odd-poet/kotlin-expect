@@ -1,5 +1,7 @@
 package net.oddpoet.expect
 
+import net.oddpoet.expect.policy.Stability
+
 /**
  * Expect.
  *
@@ -7,8 +9,11 @@ package net.oddpoet.expect
  *
  * @author Yunsang Choi
  */
-class Expect<T : Any>(internal val subject: T?, internal val negative: Boolean = false) {
-    val not: Expect<T> by lazy { Expect(subject, !negative) }
+class Expect<T : Any>
+internal constructor(private val subject: T?,
+            private val negative: Boolean = false,
+            private val describe: String = "It should") {
+    val not: Expect<T> by lazy { Expect(subject, !negative, describe + " not") }
 
     /**
      * test given predicate.
@@ -21,15 +26,27 @@ class Expect<T : Any>(internal val subject: T?, internal val negative: Boolean =
         }
     }
 
+    /**
+     * assert with assertion message and predicate.
+     *
+     * use it to define your expect vocabulary.
+     */
     fun satisfyThat(description: String, predicate: (T?) -> Boolean) {
         if (predicate(subject) == negative) {
             throw AssertionError(errorMessage(description))
         }
     }
 
-    private fun errorMessage(description: String): String {
-        val should = when (negative) {true -> "should not"; else -> "should"
+
+    @Stability.Unstable
+    fun <P : Any> propertyExpectation(name: String, extractor: (T) -> P?): Expectation<P> {
+        if (subject == null) {
+            throw RuntimeException("You try to access '$name' property for null object")
         }
-        return "It $should $description, but it's <$subject>."
+        return Expectation(extractor(subject))
+    }
+
+    private fun errorMessage(description: String): String {
+        return "$describe $description, but the actual was <$subject>."
     }
 }

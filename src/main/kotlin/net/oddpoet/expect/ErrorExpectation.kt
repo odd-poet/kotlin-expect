@@ -41,7 +41,7 @@ internal constructor(block: () -> Unit) {
      * short-cut method.
      *
      */
-    fun throws() {
-        throws(Exception::class)
+    fun throws(clause: (ExpectationClause<Exception>) -> Unit = {}) {
+        throws(Exception::class, clause)
     }
 }
