@@ -68,3 +68,16 @@ publish {
     licences = ['Apache-2.0']
     dryRun = false
 }
+
+apply plugin: 'jacoco'
+jacoco {
+    toolVersion = "0.7.9"
+}
+test {
+    include '**/*Test.*'
+    exclude '**/*IT.*'
+    exclude '**/*IntegrationTest.*'
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
