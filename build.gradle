@@ -57,8 +57,8 @@ compileTestKotlin {
 
 // ref: https://github.com/novoda/bintray-release/wiki/Configuration-of-the-publish-closure
 publish {
-    bintrayUser = project.property("bintray.user")
-    bintrayKey = project.property("bintray.key")
+    bintrayUser = project.property("bintray.user", "dummy")
+    bintrayKey = project.property("bintray.key", "N/A")
     repoName = 'maven'
     groupId = project.group
     artifactId = project.name
