@@ -5,7 +5,7 @@ import org.junit.Test
 /**
  * @author Yunsang Choi
  */
-class ExpectTest {
+class ExpectTest : AssertionPrintTest() {
     @Test
     fun `it should test subject by given predicate`() {
         expect("hello").to.satisfy { length == 5 }

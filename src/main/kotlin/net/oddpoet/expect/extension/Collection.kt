@@ -63,13 +63,13 @@ fun <E : Comparable<E>, T : List<E>> Expect<T>.beReverseSorted() =
 
 
 fun <E : Any?, T : List<E>> Expect<T>.beSortedWith(comparator: Comparator<E>) =
-        satisfyThat("be sorted with given comparator") {
+        satisfyThat("be sorted according to the given comparator") {
             it?.let { it.sortedWith(comparator) == it }
                     ?: false
         }
 
 fun <E : Any?, T : List<E>> Expect<T>.beReverseSortedWith(comparator: Comparator<E>) =
-        satisfyThat("be sorted in reverse order with given comparator") {
+        satisfyThat("be sorted in reverse order according to the given comparator") {
             it?.let { it.sortedWith(comparator).reversed() == it }
                     ?: false
         }

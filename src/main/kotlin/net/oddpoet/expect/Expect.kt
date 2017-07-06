@@ -11,8 +11,8 @@ import net.oddpoet.expect.policy.Stability
  */
 class Expect<T : Any>
 internal constructor(private val subject: T?,
-            private val negative: Boolean = false,
-            private val describe: String = "It should") {
+                     private val negative: Boolean = false,
+                     private val describe: String = "It should") {
     val not: Expect<T> by lazy { Expect(subject, !negative, describe + " not") }
 
     /**
@@ -32,9 +32,16 @@ internal constructor(private val subject: T?,
      * use it to define your expect vocabulary.
      */
     fun satisfyThat(description: String, predicate: (T?) -> Boolean) {
+
         if (predicate(subject) == negative) {
+            if (printAssertion)
+                System.err.println(assertionMessage(description) + " : <$subject>")
             throw AssertionError(errorMessage(description))
+        } else {
+            if (printAssertion)
+                System.out.println(assertionMessage(description) + " : <$subject>")
         }
+
     }
 
 
@@ -47,6 +54,14 @@ internal constructor(private val subject: T?,
     }
 
     private fun errorMessage(description: String): String {
-        return "$describe $description, but the actual was <$subject>."
+        return "${assertionMessage(description)}, but it was <$subject>."
+    }
+
+    private fun assertionMessage(description: String): String {
+        return "$describe $description"
+    }
+
+    companion object {
+        internal var printAssertion = false
     }
 }

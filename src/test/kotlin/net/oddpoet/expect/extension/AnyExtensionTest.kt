@@ -1,5 +1,6 @@
 package net.oddpoet.expect.extension
 
+import net.oddpoet.expect.AssertionPrintTest
 import net.oddpoet.expect.expect
 import org.junit.Test
 import org.slf4j.LoggerFactory
@@ -8,7 +9,7 @@ import org.slf4j.LoggerFactory
  *
  * @author Yunsang Choi
  */
-class AnyExtensionTest {
+class AnyExtensionTest : AssertionPrintTest() {
     val log = LoggerFactory.getLogger(this.javaClass)
 
     @Test

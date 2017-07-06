@@ -10,12 +10,12 @@ import net.oddpoet.expect.Expect
 
 
 fun Expect<String>.startWith(prefix: String) =
-        satisfyThat("start with") {
+        satisfyThat("start with '$prefix'") {
             it?.startsWith(prefix) ?: false
         }
 
 fun Expect<String>.endWith(suffix: String) =
-        satisfyThat("end with") {
+        satisfyThat("end with '$suffix'") {
             it?.endsWith(suffix) ?: false
         }
 

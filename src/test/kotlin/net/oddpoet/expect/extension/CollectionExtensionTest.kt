@@ -1,10 +1,11 @@
 package net.oddpoet.expect.extension
 
+import net.oddpoet.expect.AssertionPrintTest
 import net.oddpoet.expect.expect
 import net.oddpoet.expect.should
 import org.junit.Test
 
-class CollectionExtensionTest {
+class CollectionExtensionTest : AssertionPrintTest() {
 
     @Test
     fun `test contain`() {
@@ -101,7 +102,7 @@ class CollectionExtensionTest {
         val sut = mapOf("john" to 30, "jane" to 25)
         expect(sut) {
             it.should.containEntry("jane", 25)
-            it.should.containEntries("jane" to 25, "john" to  30)
+            it.should.containEntries("jane" to 25, "john" to 30)
             it.should.not.containEntry("bart", 28)
         }
     }

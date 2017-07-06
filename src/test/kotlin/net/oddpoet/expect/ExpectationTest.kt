@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory
 /**
  * @author Yunsang Choi
  */
-class ExpectationTest {
+class ExpectationTest : AssertionPrintTest() {
     val log = LoggerFactory.getLogger(this.javaClass)
 
     @Test

@@ -8,7 +8,7 @@ import net.oddpoet.expect.Expect
  */
 
 fun <T : Throwable> Expect<T>.haveMessage(expectMessage: String?) =
-        satisfyThat("has message <'$expectMessage'>") {
+        satisfyThat("has message <$expectMessage>") {
             it?.let { it.message == expectMessage } ?: false
         }
 
