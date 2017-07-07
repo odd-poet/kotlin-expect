@@ -1,16 +1,15 @@
 package net.oddpoet.expect.extension
 
-import net.oddpoet.expect.AssertionPrintTest
+import net.oddpoet.expect.AssertionPrintingTest
 import net.oddpoet.expect.expect
 import net.oddpoet.expect.should
 import org.junit.Test
-import org.slf4j.LoggerFactory
 
 /**
  *
  * @author Yunsang Choi
  */
-class AnyExtensionTest : AssertionPrintTest() {
+class AnyExtensionTest : AssertionPrintingTest() {
     @Test
     fun `test value equality`() {
         expect("hello").to.be("hello")

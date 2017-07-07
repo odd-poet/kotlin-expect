@@ -1,6 +1,6 @@
 package net.oddpoet.expect.extension
 
-import net.oddpoet.expect.AssertionPrintTest
+import net.oddpoet.expect.AssertionPrintingTest
 import net.oddpoet.expect.expect
 import net.oddpoet.expect.should
 import org.junit.Test
@@ -9,7 +9,7 @@ import org.junit.Test
  *
  * @author Yunsang Choi
  */
-class ExceptionExtensionTest : AssertionPrintTest() {
+class ExceptionExtensionTest : AssertionPrintingTest() {
 
     @Test
     fun `test exception message`() {

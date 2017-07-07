@@ -10,17 +10,17 @@ import kotlin.reflect.KClass
  */
 
 infix fun <T : Any> Expect<T>.beSameInstance(value: Any?) =
-        satisfyThat("be same instance of <$value>") {
+        satisfyThat("be same instance of <${value.literal}>") {
             it === value
         }
 
 infix fun <T : Any> Expect<T>.be(value: Any?) =
-        satisfyThat("be <$value>") {
+        satisfyThat("be <${value.literal}>") {
             it == value
         }
 
 infix fun <T : Any> Expect<T>.equal(value: Any?) =
-        satisfyThat("equal <$value>") {
+        satisfyThat("equal <${value.literal}>") {
             it == value
         }
 
@@ -30,6 +30,6 @@ fun <T : Any> Expect<T>.beNull() =
         }
 
 infix fun <T : Any> Expect<T>.beInstanceOf(type: KClass<*>) =
-        satisfyThat("be instance of <$type>") {
+        satisfyThat("be instance of <${type.literal}>") {
             type.isInstance(it)
         }

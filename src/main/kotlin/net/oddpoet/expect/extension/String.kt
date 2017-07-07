@@ -9,15 +9,26 @@ import net.oddpoet.expect.Expect
  */
 
 
-fun Expect<String>.startWith(prefix: String) =
-        satisfyThat("start with '$prefix'") {
-            it?.startsWith(prefix) ?: false
+fun Expect<String>.startWith(prefix: CharSequence, ignoreCase: Boolean = false) =
+        satisfyThat("start with ${prefix.literal}") {
+            it?.startsWith(prefix, ignoreCase) ?: false
         }
 
-fun Expect<String>.endWith(suffix: String) =
-        satisfyThat("end with '$suffix'") {
-            it?.endsWith(suffix) ?: false
+fun Expect<String>.startWith(prefix: Char, ignoreCase: Boolean = false) =
+        satisfyThat("start with ${prefix.literal}") {
+            it?.startsWith(prefix, ignoreCase) ?: false
         }
+
+fun Expect<String>.endWith(suffix: CharSequence, ignoreCase: Boolean = false) =
+        satisfyThat("end with ${suffix.literal}") {
+            it?.endsWith(suffix, ignoreCase) ?: false
+        }
+
+fun Expect<String>.endWith(suffix: Char, ignoreCase: Boolean = false) =
+        satisfyThat("end with ${suffix.literal}") {
+            it?.endsWith(suffix, ignoreCase) ?: false
+        }
+
 
 fun Expect<String>.beEmpty() =
         satisfyThat("be empty") {
@@ -39,5 +50,9 @@ fun Expect<String>.beBlankOrNull() =
             it == null || it.isBlank()
         }
 
+fun Expect<String>.match(regex: Regex) =
+        satisfyThat("match ${regex.literal}") {
+            it?.matches(regex) ?: false
+        }
 
-
+fun Expect<String>.match(regex: String) = match(Regex(regex))

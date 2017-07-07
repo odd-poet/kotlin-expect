@@ -1,6 +1,6 @@
 package net.oddpoet.expect.usage
 
-import net.oddpoet.expect.AssertionPrintTest
+import net.oddpoet.expect.AssertionPrintingTest
 import net.oddpoet.expect.expect
 import net.oddpoet.expect.extension.be
 import net.oddpoet.expect.extension.beBlankOrNull
@@ -12,7 +12,7 @@ import java.io.IOException
 import java.nio.file.NoSuchFileException
 
 
-class BasicUsageTest : AssertionPrintTest() {
+class BasicUsageTest : AssertionPrintingTest() {
 
     @Test
     fun `it should verify exception type thrown in code block`() {

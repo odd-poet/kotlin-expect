@@ -4,7 +4,7 @@ import net.oddpoet.expect.Expect
 
 
 fun <E : Any?, T : Iterable<E>> Expect<T>.contain(item: E?) =
-        satisfyThat("contain <$item>") {
+        satisfyThat("contain <${item.literal}>") {
             it?.contains(item) ?: false
         }
 
@@ -25,12 +25,12 @@ fun <E : Any?, T : Iterable<E>> Expect<T>.containNone(predicate: (E) -> Boolean)
 
 
 fun <E : Any?, T : Collection<E>> Expect<T>.containAll(vararg items: E) =
-        satisfyThat("contain all of <${items.toList()}>") {
+        satisfyThat("contain all of <${items.literal}>") {
             it?.containsAll(items.toList()) ?: false
         }
 
 fun <T : Collection<*>> Expect<T>.haveSizeOf(size: Int) =
-        satisfyThat("have size of <$size>") {
+        satisfyThat("have size of <${size.literal}>") {
             it?.size == size
         }
 
@@ -40,7 +40,7 @@ fun <T : Collection<*>> Expect<T>.beEmpty() =
         }
 
 fun <E : Any?, T : List<E>> Expect<T>.containAllInSameOrder(vararg items: E) =
-        satisfyThat("contain all <${items.toList()}> in same order ") {
+        satisfyThat("contain all <${items.literal}> in same order ") {
             if (it == null || !it.containsAll(items.toList())) false
             else {
                 val indice = items.map { i -> it.indexOf(i) }
@@ -74,24 +74,24 @@ fun <E : Any?, T : List<E>> Expect<T>.beReverseSortedWith(comparator: Comparator
         }
 
 fun <K : Any?, V : Any, T : Map<K, V>> Expect<T>.containKey(key: K?) =
-        satisfyThat("contain key <$key>") {
+        satisfyThat("contain key <${key.literal}>") {
             it?.containsKey(key) ?: false
         }
 
 fun <K : Any?, V : Any, T : Map<K, V>> Expect<T>.containKeys(vararg keys: K) =
-        satisfyThat("contain keys <${keys.toList()}>") {
+        satisfyThat("contain keys <${keys.literal}>") {
             it?.let { map ->
                 keys.all { map.containsKey(it) }
             } ?: false
         }
 
 fun <K : Any?, V : Any, T : Map<K, V>> Expect<T>.containValue(value: V?) =
-        satisfyThat("contain value <$value>") {
+        satisfyThat("contain value <${value.literal}>") {
             it?.containsValue(value) ?: false
         }
 
 fun <K : Any?, V : Any, T : Map<K, V>> Expect<T>.containValues(vararg values: V?) =
-        satisfyThat("contain values <${values.toList()}>") {
+        satisfyThat("contain values <${values.literal}>") {
             it?.let { map ->
                 values.all { map.containsValue(it) }
             } ?: false
@@ -99,14 +99,14 @@ fun <K : Any?, V : Any, T : Map<K, V>> Expect<T>.containValues(vararg values: V?
 
 
 fun <K : Any?, V : Any, T : Map<K, V>> Expect<T>.containEntry(key: K?, value: V?) =
-        satisfyThat("contain entry <$key:$value>") {
+        satisfyThat("contain entry <${key.literal}:${value.literal}>") {
             it?.let {
                 it.containsKey(key) && it[key] == value
             } ?: false
         }
 
 fun <K : Any?, V : Any, T : Map<K, V>> Expect<T>.containEntries(vararg pairs: Pair<K?, V?>) =
-        satisfyThat("contain entries <${pairs.toList()}>") {
+        satisfyThat("contain entries <${pairs.literal}>") {
             it?.let { map ->
                 pairs.all { map.containsKey(it.first) && map[it.first] == it.second }
             } ?: false

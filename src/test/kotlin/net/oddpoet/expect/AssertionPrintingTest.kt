@@ -4,7 +4,7 @@ import org.junit.After
 import org.junit.Before
 import org.slf4j.LoggerFactory
 
-abstract class AssertionPrintTest {
+abstract class AssertionPrintingTest {
     protected val log = LoggerFactory.getLogger(this.javaClass)
 
     @Before

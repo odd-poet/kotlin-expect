@@ -33,22 +33,47 @@ internal constructor(private val subject: T?,
 
         if (predicate(subject) == negative) {
             if (printAssertion)
-                System.err.println(assertionMessage(description) + " : <$subject>")
+                System.err.println(assertionMessage(description) + " : <${subject.literal}>")
             throw AssertionError(errorMessage(description))
         } else {
             if (printAssertion)
-                System.out.println(assertionMessage(description) + " : <$subject>")
+                System.out.println(assertionMessage(description) + " : <${subject.literal}>")
         }
 
     }
 
     private fun errorMessage(description: String): String {
-        return "${assertionMessage(description)}, but it was <$subject>."
+        return "${assertionMessage(description)}, but it was <${subject.literal}>."
     }
 
     private fun assertionMessage(description: String): String {
         return "$describe $description"
     }
+
+    val <X : Any?> X.literal: String
+        get() = when (this) {
+            null -> "null"
+            is Char -> "'${invisibleToString(this.toString())}'"
+            is String -> "\"${invisibleToString(this)}\""
+            is Regex -> "/$this/"
+            is Array<*> -> this.map { it.literal }
+                    .joinToString(separator = ",", prefix = "[", postfix = "]")
+            is Collection<*> -> {
+                this.map { it.literal }
+                        .joinToString(separator = ",", prefix = "${className(this@literal)}(", postfix = ")")
+            }
+            is Map<*, *> -> this.map { "${it.key.literal}:${it.value.literal}" }
+                    .joinToString(separator = ",", prefix = "${className(this@literal)}{", postfix = "}")
+            else -> toString()
+        }
+
+    private fun className(value: Any) = value::class.simpleName
+
+    private fun invisibleToString(string: String) =
+            string.replace("\\", "\\\\")
+                    .replace("\n", "\\n")
+                    .replace("\r", "\\r")
+                    .replace("\t", "\\t")
 
     companion object {
         internal var printAssertion = false
