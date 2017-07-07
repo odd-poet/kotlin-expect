@@ -11,8 +11,6 @@ import org.slf4j.LoggerFactory
  * @author Yunsang Choi
  */
 class AnyExtensionTest : AssertionPrintTest() {
-    val log = LoggerFactory.getLogger(this.javaClass)
-
     @Test
     fun `test value equality`() {
         expect("hello").to.be("hello")

@@ -1,7 +1,5 @@
 package net.oddpoet.expect.policy
 
-import java.lang.annotation.Documented
-
 /**
  * Stability annotation.
  *
@@ -14,7 +12,7 @@ internal interface Stability {
      *
      * This annotation ensures compatibility at the major version level.
      */
-    @Documented
+    @MustBeDocumented
     @Retention(AnnotationRetention.RUNTIME)
     annotation class Stable
 
@@ -25,7 +23,7 @@ internal interface Stability {
      *
      * This annotation ensures compatibility at the major version level.
      */
-    @Documented
+    @MustBeDocumented
     @Retention(AnnotationRetention.RUNTIME)
     annotation class Evolving
 
@@ -34,7 +32,7 @@ internal interface Stability {
      *
      * Not recommend to use.
      */
-    @Documented
+    @MustBeDocumented
     @Retention(AnnotationRetention.RUNTIME)
     annotation class Unstable
 
