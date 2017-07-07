@@ -73,10 +73,14 @@ apply plugin: 'jacoco'
 jacoco {
     toolVersion = "0.7.9"
 }
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        xml.destination file("${buildDir}/reports/jacoco/report.xml")
+    }
+}
+
 test {
-    include '**/*Test.*'
-    exclude '**/*IT.*'
-    exclude '**/*IntegrationTest.*'
     testLogging {
         events "passed", "skipped", "failed"
     }
