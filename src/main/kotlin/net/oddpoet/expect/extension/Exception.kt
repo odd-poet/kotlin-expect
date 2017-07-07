@@ -17,4 +17,3 @@ fun <T : Throwable> Expect<T>.haveNoMessage() =
             it?.let { it.message == null } ?: false
         }
 
-

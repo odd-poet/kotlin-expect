@@ -39,7 +39,6 @@ fun <T : Collection<*>> Expect<T>.beEmpty() =
             it?.isEmpty() ?: false
         }
 
-
 fun <E : Any?, T : List<E>> Expect<T>.containAllInSameOrder(vararg items: E) =
         satisfyThat("contain all <${items.toList()}> in same order ") {
             if (it == null || !it.containsAll(items.toList())) false

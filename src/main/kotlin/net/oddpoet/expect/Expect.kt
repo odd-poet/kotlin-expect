@@ -1,7 +1,5 @@
 package net.oddpoet.expect
 
-import net.oddpoet.expect.policy.Stability
-
 /**
  * Expect.
  *
@@ -42,15 +40,6 @@ internal constructor(private val subject: T?,
                 System.out.println(assertionMessage(description) + " : <$subject>")
         }
 
-    }
-
-
-    @Stability.Unstable
-    fun <P : Any> propertyExpectation(name: String, extractor: (T) -> P?): Expectation<P> {
-        if (subject == null) {
-            throw RuntimeException("You try to access '$name' property for null object")
-        }
-        return Expectation(extractor(subject))
     }
 
     private fun errorMessage(description: String): String {
