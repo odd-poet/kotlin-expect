@@ -1,6 +1,5 @@
 package net.oddpoet.expect.usage
 
-import net.oddpoet.expect.AssertionPrintingTest
 import net.oddpoet.expect.expect
 import net.oddpoet.expect.extension.be
 import net.oddpoet.expect.extension.beBlankOrNull
@@ -8,11 +7,20 @@ import net.oddpoet.expect.extension.endWith
 import net.oddpoet.expect.extension.startWith
 import net.oddpoet.expect.should
 import org.junit.Test
+import org.slf4j.LoggerFactory
 import java.io.IOException
 import java.nio.file.NoSuchFileException
 
 
-class BasicUsageTest : AssertionPrintingTest() {
+class BasicUsageTest {
+    val log = LoggerFactory.getLogger(this.javaClass)
+
+    @Test(expected = AssertionError::class)
+    fun `it should fail when any exception did not occurred`() {
+        expect {
+            // do nothing.
+        }.throws()
+    }
 
     @Test
     fun `it should verify exception type thrown in code block`() {

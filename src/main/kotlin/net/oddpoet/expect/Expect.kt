@@ -1,5 +1,7 @@
 package net.oddpoet.expect
 
+import org.slf4j.LoggerFactory
+
 /**
  * Expect.
  *
@@ -10,8 +12,9 @@ package net.oddpoet.expect
 class Expect<T : Any>
 internal constructor(private val subject: T?,
                      private val negative: Boolean = false,
-                     private val describe: String = "It should") {
-    val not: Expect<T> by lazy { Expect(subject, !negative, describe + " not") }
+                     private val verb: String = "should") {
+    val not: Expect<T> by lazy { Expect(subject, !negative, verb + " not") }
+    private val log = LoggerFactory.getLogger(this.javaClass)
 
     /**
      * test given predicate.
@@ -30,24 +33,17 @@ internal constructor(private val subject: T?,
      * use it to define your expect vocabulary.
      */
     fun satisfyThat(description: String, predicate: (T?) -> Boolean) {
-
         if (predicate(subject) == negative) {
-            if (printAssertion)
-                System.err.println(assertionMessage(description) + " : <${subject.literal}>")
+            log.debug("${subject.literal} $verb $description : FAIL")
             throw AssertionError(errorMessage(description))
         } else {
-            if (printAssertion)
-                System.out.println(assertionMessage(description) + " : <${subject.literal}>")
+            log.debug("${subject.literal} $verb $description : OK")
         }
 
     }
 
     private fun errorMessage(description: String): String {
-        return "${assertionMessage(description)}, but it was <${subject.literal}>."
-    }
-
-    private fun assertionMessage(description: String): String {
-        return "$describe $description"
+        return "It $verb $description, but it was <${subject.literal}>."
     }
 
     val <X : Any?> X.literal: String
@@ -75,7 +71,19 @@ internal constructor(private val subject: T?,
                     .replace("\r", "\\r")
                     .replace("\t", "\\t")
 
-    companion object {
-        internal var printAssertion = false
+
+    @Deprecated("DO NOT USE")
+    override fun equals(other: Any?): Boolean {
+        throw RuntimeException("DO NOT USE THIS METHOD")
+    }
+
+    @Deprecated("DO NOT USE")
+    override fun hashCode(): Int {
+        throw RuntimeException("DO NOT USE THIS METHOD")
+    }
+
+    @Deprecated("DO NOT USE")
+    override fun toString(): String {
+        throw RuntimeException("DO NOT USE THIS METHOD")
     }
 }

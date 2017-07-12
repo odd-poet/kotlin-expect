@@ -1,11 +1,10 @@
 package net.oddpoet.expect.extension
 
-import net.oddpoet.expect.AssertionPrintingTest
 import net.oddpoet.expect.expect
 import net.oddpoet.expect.should
 import org.junit.Test
 
-class StringExtensionTest : AssertionPrintingTest() {
+class StringExtensionTest {
 
     @Test
     fun `test startWith`() {
@@ -65,7 +64,7 @@ class StringExtensionTest : AssertionPrintingTest() {
 
     @Test
     fun `test beBlankOrNull`() {
-        val nil : String? = null
+        val nil: String? = null
         nil.should.not.beBlank()
         nil.should.beBlankOrNull()
     }

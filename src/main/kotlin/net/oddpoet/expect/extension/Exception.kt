@@ -8,12 +8,12 @@ import net.oddpoet.expect.Expect
  */
 
 fun <T : Throwable> Expect<T>.haveMessage(expectMessage: String?) =
-        satisfyThat("has message <$expectMessage>") {
+        satisfyThat("has message of ${expectMessage.literal}") {
             it?.let { it.message == expectMessage } ?: false
         }
 
 fun <T : Throwable> Expect<T>.haveNoMessage() =
-        satisfyThat("has no describe") {
+        satisfyThat("has no message") {
             it?.let { it.message == null } ?: false
         }
 

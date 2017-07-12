@@ -1,5 +1,5 @@
 group 'net.oddpoet'
-version '0.9.0-SNAPSHOT'
+version '0.8.0'
 
 buildscript {
     ext {
@@ -36,13 +36,13 @@ repositories {
 dependencies {
     compile(
             "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version",
-            "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+            "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
+            "org.slf4j:slf4j-api:$slf4j_version"
     )
 
     testCompile(
             "org.jetbrains.kotlin:kotlin-test:$kotlin_version",
             "junit:junit:$junit_version",
-            "org.slf4j:slf4j-api:$slf4j_version",
             "ch.qos.logback:logback-classic:$logback_version"
     )
 }
