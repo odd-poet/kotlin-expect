@@ -15,6 +15,13 @@ import java.nio.file.NoSuchFileException
 class BasicUsageTest {
     val log = LoggerFactory.getLogger(this.javaClass)
 
+    @Test(expected = AssertionError::class)
+    fun `it should fail when any exception did not occurred`() {
+        expect {
+            // do nothing.
+        }.throws()
+    }
+
     @Test
     fun `it should verify exception type thrown in code block`() {
         expect {
