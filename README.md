@@ -87,7 +87,7 @@ class Employee(
 fun <T : Person> Expect<T>.beUnderage() =
         satisfyThat("be underage") {
             it?.let {
-                it.birthdate.plusYears(19) < LocalDate.now()
+                it.birthdate.plusYears(19) > LocalDate.now()
             } ?: false
         }
 
