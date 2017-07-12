@@ -1,5 +1,7 @@
 package net.oddpoet.expect
 
+import org.slf4j.LoggerFactory
+
 /**
  * Expect.
  *
@@ -12,6 +14,7 @@ internal constructor(private val subject: T?,
                      private val negative: Boolean = false,
                      private val verb: String = "should") {
     val not: Expect<T> by lazy { Expect(subject, !negative, verb + " not") }
+    private val log = LoggerFactory.getLogger(this.javaClass)
 
     /**
      * test given predicate.
@@ -31,21 +34,16 @@ internal constructor(private val subject: T?,
      */
     fun satisfyThat(description: String, predicate: (T?) -> Boolean) {
         if (predicate(subject) == negative) {
-            printAssertion(description, false)
+            log.debug("${subject.literal} $verb $description : FAIL")
             throw AssertionError(errorMessage(description))
         } else {
-            printAssertion(description, true)
+            log.debug("${subject.literal} $verb $description : OK")
         }
 
     }
 
     private fun errorMessage(description: String): String {
         return "It $verb $description, but it was <${subject.literal}>."
-    }
-
-    private fun printAssertion(description: String, result: Boolean) {
-        if (debug)
-            System.out.println("${subject.literal} $verb $description : <$result>")
     }
 
     val <X : Any?> X.literal: String
@@ -73,7 +71,4 @@ internal constructor(private val subject: T?,
                     .replace("\r", "\\r")
                     .replace("\t", "\\t")
 
-    companion object {
-        internal var debug = false
-    }
 }

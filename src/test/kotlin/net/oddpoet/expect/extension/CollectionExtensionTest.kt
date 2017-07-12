@@ -1,11 +1,10 @@
 package net.oddpoet.expect.extension
 
-import net.oddpoet.expect.AssertionPrintingTest
 import net.oddpoet.expect.expect
 import net.oddpoet.expect.should
 import org.junit.Test
 
-class CollectionExtensionTest : AssertionPrintingTest() {
+class CollectionExtensionTest {
 
     @Test
     fun `test contain`() {
