@@ -71,4 +71,19 @@ internal constructor(private val subject: T?,
                     .replace("\r", "\\r")
                     .replace("\t", "\\t")
 
+
+    @Deprecated("DO NOT USE")
+    override fun equals(other: Any?): Boolean {
+        throw RuntimeException("DO NOT USE THIS METHOD")
+    }
+
+    @Deprecated("DO NOT USE")
+    override fun hashCode(): Int {
+        throw RuntimeException("DO NOT USE THIS METHOD")
+    }
+
+    @Deprecated("DO NOT USE")
+    override fun toString(): String {
+        throw RuntimeException("DO NOT USE THIS METHOD")
+    }
 }

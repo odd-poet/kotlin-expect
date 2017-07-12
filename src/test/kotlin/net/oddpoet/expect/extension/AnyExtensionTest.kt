@@ -23,7 +23,7 @@ class AnyExtensionTest {
         val list1 = listOf(1, 2, 3)
         val list2 = listOf(1, 2, 3)
 
-        list1.should.equals(list2)
+        list1.should.equal(list2)
         list1.should.not.beSameInstance(list2)
     }
 
