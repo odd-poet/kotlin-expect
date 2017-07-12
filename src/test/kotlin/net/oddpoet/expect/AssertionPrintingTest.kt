@@ -9,11 +9,11 @@ abstract class AssertionPrintingTest {
 
     @Before
     fun setUp() {
-        Expect.printAssertion = true
+        Expect.debug = true
     }
 
     @After
     fun tearDown() {
-        Expect.printAssertion = false
+        Expect.debug = false
     }
 }

@@ -10,22 +10,22 @@ import net.oddpoet.expect.Expect
 
 
 fun Expect<String>.startWith(prefix: CharSequence, ignoreCase: Boolean = false) =
-        satisfyThat("start with ${prefix.literal}") {
+        satisfyThat("start with ${prefix.literal} (ignoreCase:$ignoreCase)") {
             it?.startsWith(prefix, ignoreCase) ?: false
         }
 
 fun Expect<String>.startWith(prefix: Char, ignoreCase: Boolean = false) =
-        satisfyThat("start with ${prefix.literal}") {
+        satisfyThat("start with ${prefix.literal} (ignoreCase:$ignoreCase)") {
             it?.startsWith(prefix, ignoreCase) ?: false
         }
 
 fun Expect<String>.endWith(suffix: CharSequence, ignoreCase: Boolean = false) =
-        satisfyThat("end with ${suffix.literal}") {
+        satisfyThat("end with ${suffix.literal} (ignoreCase:$ignoreCase)") {
             it?.endsWith(suffix, ignoreCase) ?: false
         }
 
 fun Expect<String>.endWith(suffix: Char, ignoreCase: Boolean = false) =
-        satisfyThat("end with ${suffix.literal}") {
+        satisfyThat("end with ${suffix.literal} (ignoreCase:$ignoreCase)") {
             it?.endsWith(suffix, ignoreCase) ?: false
         }
 

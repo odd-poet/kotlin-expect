@@ -10,8 +10,8 @@ package net.oddpoet.expect
 class Expect<T : Any>
 internal constructor(private val subject: T?,
                      private val negative: Boolean = false,
-                     private val describe: String = "It should") {
-    val not: Expect<T> by lazy { Expect(subject, !negative, describe + " not") }
+                     private val verb: String = "should") {
+    val not: Expect<T> by lazy { Expect(subject, !negative, verb + " not") }
 
     /**
      * test given predicate.
@@ -30,24 +30,22 @@ internal constructor(private val subject: T?,
      * use it to define your expect vocabulary.
      */
     fun satisfyThat(description: String, predicate: (T?) -> Boolean) {
-
         if (predicate(subject) == negative) {
-            if (printAssertion)
-                System.err.println(assertionMessage(description) + " : <${subject.literal}>")
+            printAssertion(description, false)
             throw AssertionError(errorMessage(description))
         } else {
-            if (printAssertion)
-                System.out.println(assertionMessage(description) + " : <${subject.literal}>")
+            printAssertion(description, true)
         }
 
     }
 
     private fun errorMessage(description: String): String {
-        return "${assertionMessage(description)}, but it was <${subject.literal}>."
+        return "It $verb $description, but it was <${subject.literal}>."
     }
 
-    private fun assertionMessage(description: String): String {
-        return "$describe $description"
+    private fun printAssertion(description: String, result: Boolean) {
+        if (debug)
+            System.out.println("${subject.literal} $verb $description : <$result>")
     }
 
     val <X : Any?> X.literal: String
@@ -76,6 +74,6 @@ internal constructor(private val subject: T?,
                     .replace("\t", "\\t")
 
     companion object {
-        internal var printAssertion = false
+        internal var debug = false
     }
 }
