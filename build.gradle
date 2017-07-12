@@ -1,5 +1,5 @@
 group 'net.oddpoet'
-version '0.8.0'
+version '0.8.1-SNAPSHOT'
 
 buildscript {
     ext {
