@@ -54,8 +54,6 @@ compileTestKotlin {
     kotlinOptions.jvmTarget = "1.6"
 }
 
-description
-
 bintray {
     user = project.hasProperty("bintray.user") ? project.property("bintray.user")
             : System.getenv("BINTRAY_USER") || "unknown"
@@ -87,12 +85,16 @@ bintray {
     override = true
 }
 
+task sourcesJar(type: Jar) {
+    from sourceSets.main.kotlin.srcDirs
+    classifier = 'sources'
+}
+
 def pomConfig = {
     licenses {
         license {
             name "The Apache Software License, Version 2.0"
             url "http://www.apache.org/licenses/LICENSE-2.0.txt"
-            distribution "repo"
         }
     }
     developers {
@@ -113,8 +115,7 @@ publishing {
             groupId project.group
             artifactId project.name
             version project.version
-//            artifact sourcesJar
-//            artifact javadocJar
+            artifact sourcesJar
             pom.withXml {
                 def root = asNode()
                 root.appendNode('description', project.description)
