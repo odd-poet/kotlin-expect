@@ -54,9 +54,14 @@ compileTestKotlin {
     kotlinOptions.jvmTarget = "1.6"
 }
 
+
+def prop(name, defaultValue) {
+    return project.hasProperty(name) ? project.property(name) : defaultValue
+}
+
 bintray {
-    user = 'oddpoet'
-    key = properties.get("bintray.key", "NO-BINTRAY-KEY")
+    user = prop('bintray.user', 'WHORU')
+    key = prop("bintray.key", "NO-BINTRAY-KEY")
     pkg {
         repo = 'maven'
         name = project.name
@@ -77,8 +82,8 @@ bintray {
             }
             mavenCentralSync {
                 sync = true //[Default: true] Determines whether to sync the version to Maven Central.
-                user = properties.get("oss.user.token", "WHO-ARE-YOU")
-                password = properties.get("oss.user.password", "NO-PASSWORD")
+                user = prop("oss.user.token", "WHO-ARE-YOU")
+                password = prop("oss.user.password", "NO-PASSWORD")
                 close = '1' //Optional property. By default the staging repository is closed and artifacts are released to Maven Central. You can optionally turn this behaviour off (by puting 0 as value) and release the version manually.
             }
         }
