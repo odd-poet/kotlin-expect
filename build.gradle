@@ -1,6 +1,3 @@
-group 'net.oddpoet'
-version '0.8.0'
-
 buildscript {
     ext {
         kotlin_version = '1.1.3-2'
@@ -15,16 +12,18 @@ buildscript {
         jcenter()
         maven { url 'https://plugins.gradle.org/m2/' }
     }
-
-    dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "com.novoda:bintray-release:$bintray_release_version"
-    }
 }
 
-apply plugin: 'kotlin'
-apply plugin: 'idea'
-apply plugin: 'com.novoda.bintray-release'
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.1.3-2'
+    id 'com.jfrog.bintray' version '1.7.3'
+    id 'maven-publish'
+    id 'idea'
+}
+
+group 'net.oddpoet'
+version '0.8.1'
+description 'rspec style assertion library for kotlin test'
 
 sourceCompatibility = 1.6
 targetCompatibility = 1.6
@@ -55,21 +54,81 @@ compileTestKotlin {
     kotlinOptions.jvmTarget = "1.6"
 }
 
-// ref: https://github.com/novoda/bintray-release/wiki/Configuration-of-the-publish-closure
-publish {
-    bintrayUser = project.hasProperty("bintray.user") ? project.property("bintray.user")
+bintray {
+    user = project.hasProperty("bintray.user") ? project.property("bintray.user")
             : System.getenv("BINTRAY_USER") || "unknown"
-    bintrayKey = project.hasProperty("bintray.key") ? project.property("bintray.key")
+    key = project.hasProperty("bintray.key") ? project.property("bintray.key")
             : System.getenv("BINTRAY_KEY") || "N/A"
-    repoName = 'maven'
-    groupId = project.group
-    artifactId = project.name
-    publishVersion = project.version
-    desc = 'rspec style assertion library for kotlin test'
-    website = 'https://github.com/odd-poet/kotlin-expect'
-    licences = ['Apache-2.0']
+    pkg {
+        repo = 'maven'
+        name = project.name
+        licenses = ['Apache-2.0']
+        websiteUrl = 'https://github.com/odd-poet/kotlin-expect'
+        issueTrackerUrl = 'https://github.com/odd-poet/kotlin-expect/issues'
+        vcsUrl = 'https://github.com/odd-poet/kotlin-expect.git'
+        labels = ['kotlin', 'expect', 'rspec']
+        publicDownloadNumbers = true
+        version {
+            name = project.version
+            desc = project.description
+            released = new Date()
+            vcsTag = "v${project.version}"
+            gpg {
+                sign = true
+                // passphrase = 'you know nothing, jon snow'
+            }
+        }
+    }
+    publications = ['MyPublication']
     dryRun = false
+    publish = true
+    override = true
 }
+
+task sourcesJar(type: Jar) {
+    from sourceSets.main.kotlin.srcDirs
+    classifier = 'sources'
+}
+
+def pomConfig = {
+    licenses {
+        license {
+            name "The Apache Software License, Version 2.0"
+            url "http://www.apache.org/licenses/LICENSE-2.0.txt"
+        }
+    }
+    developers {
+        developer {
+            id "oddpoet"
+            name "Yunsang Choi"
+            email "oddpoet@gmail.net"
+        }
+    }
+    scm {
+        url "https://github.com/odd-poet/kotlin-expect"
+    }
+}
+publishing {
+    publications {
+        MyPublication(MavenPublication) {
+            from components.java
+            groupId project.group
+            artifactId project.name
+            version project.version
+            artifact sourcesJar
+            pom.withXml {
+                def root = asNode()
+                root.appendNode('description', project.description)
+                root.appendNode('name', project.name)
+                root.appendNode('url', 'https://github.com/odd-poet/kotlin-expect')
+                root.children().last() + pomConfig
+            }
+
+        }
+    }
+
+}
+
 
 apply plugin: 'jacoco'
 jacoco {
