@@ -46,31 +46,9 @@ internal constructor(private val subject: T?,
         return "It $verb $description, but it was <${subject.literal}>."
     }
 
+    // Expect class scoped extension (for print object in assertion message)
     val <X : Any?> X.literal: String
-        get() = when (this) {
-            null -> "null"
-            is Char -> "'${invisibleToString(this.toString())}'"
-            is String -> "\"${invisibleToString(this)}\""
-            is Regex -> "/$this/"
-            is Array<*> -> this.map { it.literal }
-                    .joinToString(separator = ",", prefix = "[", postfix = "]")
-            is Collection<*> -> {
-                this.map { it.literal }
-                        .joinToString(separator = ",", prefix = "${className(this@literal)}(", postfix = ")")
-            }
-            is Map<*, *> -> this.map { "${it.key.literal}:${it.value.literal}" }
-                    .joinToString(separator = ",", prefix = "${className(this@literal)}{", postfix = "}")
-            else -> toString()
-        }
-
-    private fun className(value: Any) = value::class.simpleName
-
-    private fun invisibleToString(string: String) =
-            string.replace("\\", "\\\\")
-                    .replace("\n", "\\n")
-                    .replace("\r", "\\r")
-                    .replace("\t", "\\t")
-
+        get() = LiteralUtil.literal(this)
 
     @Deprecated("DO NOT USE")
     override fun equals(other: Any?): Boolean {
