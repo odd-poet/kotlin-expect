@@ -22,7 +22,7 @@ plugins {
 }
 
 group 'net.oddpoet'
-version '0.8.4'
+version '0.8.5-SNAPSHOT'
 description 'rspec style assertion library for kotlin test'
 
 sourceCompatibility = 1.6
