@@ -8,7 +8,7 @@
 
 ```gradle
 dependencies {
-    testCompile("net.oddpoet:kotlin-expect:0.8.2")
+    testCompile("net.oddpoet:kotlin-expect:0.8.4")
 }
 ```
 
@@ -24,7 +24,7 @@ expect(list).to.haveSizeOf(3)
 expect(list).to.satisfy { size == 3}
 expect(list).to.not.contain(5)
 expect(list).to.containAll { it < 10 }
-expect(result).to.not.beInstanceOf(Set::class)
+expect(list).to.not.beInstanceOf(Set::class)
 ```
 
 ### `should`
@@ -40,7 +40,8 @@ Alternatively, you can write assertions in the form `subject.should` more simply
 
 ### `expect(s) { ... }`
 
-You can also create multiple assertions for an object in the form `expect(s) {...}`
+You can also create multiple assertions for a subject in the form `expect(s) {...}`
+
 ```kotlin
 expect(aList) {
     it.should.haveSizeOf(10)
@@ -67,10 +68,11 @@ expect {
 
 ## Write own your assertion
  
-`Kotlin-expect` has built-in assertions 
-for java base types(`String`, `Collection`, `Map`, `Number` and so on).
+`Kotlin-expect` has built-in assertions for java base types(`String`, `Collection`, `Map`, `Number` and so on).
 You can define new assertions for your class.
 An assertion for a class is defined as an extension of the `Expect` class.
+
+### example
 
 ```kotlin
 // for your classes
@@ -82,36 +84,37 @@ class Employee(
         name: String, birthdate: LocalDate,
         val empNo: String?,
         val dept: String?) : Person(name, birthdate)
+```
 
+```kotlin
 // you can write your own assertion
 fun <T : Person> Expect<T>.beUnderage() =
         satisfyThat("be underage") {
-            it?.let {
-                it.birthdate.plusYears(19) > LocalDate.now()
-            } ?: false
+            it.birthdate.plusYears(19) > LocalDate.now()
         }
 
-fun Expect<Employee>.beValidData() =
+fun Expect<Employee>.beValid() =
         satisfyThat("be valid") {
-            it?.let { it.empNo != null && it.dept != null } ?: false
+            it.empNo != null && it.dept != null 
         }
 
 fun Expect<Employee>.beAssignedTo(dept: String) =
         satisfyThat("be assigned to $dept") {
-            it?.let { it.dept == dept } ?: false
+            it.dept == dept 
         }
-
+```
+```kotlin
 // then you can use your assertion.
-val emp: Employee = Employee(
+val emp = Employee(
         "yunsang.choi",
         LocalDate.of(1976, 4, 2),
         "X00000",
         "DevTeam")
 expect(emp) {
-    it.should.beValidData()
+    it.should.beValid()
     it.should.not.beUnderage()
+    it.should.not.beAssignedTo("DesignTeam")
 }
-emp.should.not.beAssignedTo("DesignTeam")
 
 ```
 

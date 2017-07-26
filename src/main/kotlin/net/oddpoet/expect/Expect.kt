@@ -22,7 +22,7 @@ internal constructor(private val subject: T?,
      * if subject is null, it will throw assertError.
      */
     fun satisfy(predicate: T.() -> Boolean) {
-        satisfyThat("satisfy given predicate <$predicate>") {
+        satisfyThatForNullable("satisfy given predicate <$predicate>") {
             it?.predicate() ?: false
         }
     }
@@ -32,14 +32,23 @@ internal constructor(private val subject: T?,
      *
      * use it to define your expect vocabulary.
      */
-    fun satisfyThat(description: String, predicate: (T?) -> Boolean) {
+    fun satisfyThat(description: String, predicate: (T) -> Boolean) {
+        satisfyThatForNullable(description) {
+            it?.let { predicate(it) } ?: false
+        }
+    }
+
+    /**
+     * same as `satisfyThat`.
+     * but it could be test nullable.
+     */
+    fun satisfyThatForNullable(description: String, predicate: (T?) -> Boolean) {
         if (predicate(subject) == negative) {
             log.debug("${subject.literal} $verb $description : FAIL")
             throw AssertionError(errorMessage(description))
         } else {
             log.debug("${subject.literal} $verb $description : OK")
         }
-
     }
 
     private fun errorMessage(description: String): String {

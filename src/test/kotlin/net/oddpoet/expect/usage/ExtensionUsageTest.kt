@@ -37,17 +37,15 @@ class Employee(
 // you can write your own assertion
 fun <T : Person> Expect<T>.beUnderage() =
         satisfyThat("be underage") {
-            it?.let {
-                it.birthdate.plusYears(19) > LocalDate.now()
-            } ?: false
+            it.birthdate.plusYears(19) > LocalDate.now()
         }
 
 fun Expect<Employee>.beValidData() =
         satisfyThat("be valid") {
-            it?.let { it.empNo != null && it.dept != null } ?: false
+            it.empNo != null && it.dept != null
         }
 
 fun Expect<Employee>.beAssignedTo(dept: String) =
         satisfyThat("be assigned to ${dept.literal}") {
-            it?.let { it.dept == dept } ?: false
+            it.dept == dept
         }

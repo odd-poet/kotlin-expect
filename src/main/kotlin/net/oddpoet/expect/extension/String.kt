@@ -11,48 +11,57 @@ import net.oddpoet.expect.Expect
 
 fun Expect<String>.startWith(prefix: CharSequence, ignoreCase: Boolean = false) =
         satisfyThat("start with ${prefix.literal} (ignoreCase:$ignoreCase)") {
-            it?.startsWith(prefix, ignoreCase) ?: false
+            it.startsWith(prefix, ignoreCase)
         }
 
 fun Expect<String>.startWith(prefix: Char, ignoreCase: Boolean = false) =
         satisfyThat("start with ${prefix.literal} (ignoreCase:$ignoreCase)") {
-            it?.startsWith(prefix, ignoreCase) ?: false
+            it.startsWith(prefix, ignoreCase)
         }
 
 fun Expect<String>.endWith(suffix: CharSequence, ignoreCase: Boolean = false) =
         satisfyThat("end with ${suffix.literal} (ignoreCase:$ignoreCase)") {
-            it?.endsWith(suffix, ignoreCase) ?: false
+            it.endsWith(suffix, ignoreCase)
         }
 
 fun Expect<String>.endWith(suffix: Char, ignoreCase: Boolean = false) =
         satisfyThat("end with ${suffix.literal} (ignoreCase:$ignoreCase)") {
-            it?.endsWith(suffix, ignoreCase) ?: false
+            it.endsWith(suffix, ignoreCase)
         }
-
 
 fun Expect<String>.beEmpty() =
         satisfyThat("be empty") {
-            it?.isEmpty() ?: false
+            it.isEmpty()
         }
 
 fun Expect<String>.beEmptyOrNull() =
-        satisfyThat("be empty") {
+        satisfyThatForNullable("be empty") {
             it == null || it.isEmpty()
         }
 
 fun Expect<String>.beBlank() =
         satisfyThat("be empty") {
-            it?.isBlank() ?: false
+            it.isBlank()
         }
 
 fun Expect<String>.beBlankOrNull() =
-        satisfyThat("be empty") {
+        satisfyThatForNullable("be empty") {
             it == null || it.isBlank()
+        }
+
+fun Expect<String>.containChar(char: Char, ignoreCase: Boolean = false) =
+        satisfyThat("contain ${char.literal}") {
+            it.contains(char, ignoreCase)
+        }
+
+fun Expect<String>.containString(substr: CharSequence, ignoreCase: Boolean = false) =
+        satisfyThat("contain ${substr.literal}") {
+            it.contains(substr, ignoreCase)
         }
 
 fun Expect<String>.match(regex: Regex) =
         satisfyThat("match ${regex.literal}") {
-            it?.matches(regex) ?: false
+            it.matches(regex)
         }
 
 fun Expect<String>.match(regex: String) = match(Regex(regex))
