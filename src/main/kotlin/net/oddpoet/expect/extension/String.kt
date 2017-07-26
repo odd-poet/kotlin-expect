@@ -49,6 +49,16 @@ fun Expect<String>.beBlankOrNull() =
             it == null || it.isBlank()
         }
 
+fun Expect<String>.containChar(char: Char, ignoreCase: Boolean = false) =
+        satisfyThat("contain ${char.literal}") {
+            it.contains(char, ignoreCase)
+        }
+
+fun Expect<String>.containString(substr: CharSequence, ignoreCase: Boolean = false) =
+        satisfyThat("contain ${substr.literal}") {
+            it.contains(substr, ignoreCase)
+        }
+
 fun Expect<String>.match(regex: Regex) =
         satisfyThat("match ${regex.literal}") {
             it.matches(regex)

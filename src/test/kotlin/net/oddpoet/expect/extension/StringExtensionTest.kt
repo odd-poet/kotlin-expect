@@ -74,4 +74,13 @@ class StringExtensionTest {
         expect("hello").to.match("^h.*o$")
         expect("\\").to.match("^\\\\")
     }
+
+    @Test
+    fun `test contain`() {
+        "hello".should.containString("ll")
+        "hello".should.containString("EL", ignoreCase = true)
+        "hello".should.containChar('l')
+        "hello".should.containChar('O', ignoreCase = true)
+    }
+
 }
