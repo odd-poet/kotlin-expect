@@ -1,5 +1,7 @@
 package net.oddpoet.expect
 
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import kotlin.reflect.KClass
 
 /**
@@ -18,6 +20,7 @@ internal constructor(block: () -> Unit) {
     } catch (e: Throwable) {
         e
     }
+    private val log : Logger = LoggerFactory.getLogger(this.javaClass)
 
     /**
      * Test type of exception.
@@ -29,11 +32,14 @@ internal constructor(block: () -> Unit) {
     fun <T : Throwable> throws(exceptionClass: KClass<out T>,
                                clause: (T) -> Unit = {}) {
         if (thrown == null) {
+            log.debug("No exception had been thrown : FAIL")
             throw AssertionError("expected to occur a exception<$exceptionClass> bu no exception was thrown.")
         }
         if (!exceptionClass.isInstance(thrown)) {
+            log.debug("${thrown.literal} has been thrown, but expected <$exceptionClass> : FAIL")
             throw AssertionError("expected <$exceptionClass> to be thrown, but <${thrown::class}> was thrown.", thrown)
         }
+        log.debug("${thrown.literal} has been thrown (expected:<$exceptionClass>) : OK")
         clause(thrown as T)
     }
 
@@ -44,4 +50,9 @@ internal constructor(block: () -> Unit) {
     fun throws(clause: (Exception) -> Unit = {}) {
         throws(Exception::class, clause)
     }
+
+
+    // Expect class scoped extension (for print object in assertion message)
+    internal val <X : Any?> X.literal: String
+        get() = Literalizer.literal(this)
 }

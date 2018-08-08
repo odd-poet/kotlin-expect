@@ -72,7 +72,7 @@ class StringExtensionTest {
     @Test
     fun `test match regex`() {
         expect("hello").to.match("^h.*o$")
-        expect("\\").to.match("^\\\\")
+        "\\".should.match("^\\\\")
     }
 
     @Test

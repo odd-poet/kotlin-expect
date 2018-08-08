@@ -55,8 +55,9 @@ internal constructor(private val subject: T?,
         return "It $verb $description, but it was <${subject.literal}>."
     }
 
+
     // Expect class scoped extension (for print object in assertion message)
-    val <X : Any?> X.literal: String
+    internal val <X : Any?> X.literal: String
         get() = Literalizer.literal(this)
 
     @Deprecated("DO NOT USE")

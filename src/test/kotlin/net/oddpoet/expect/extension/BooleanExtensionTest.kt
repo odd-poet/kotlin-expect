@@ -24,5 +24,8 @@ class BooleanExtensionTest {
             it.should.beFalse()
             it.should.not.beTrue()
         }
+        expect {
+            true.should.beFalse()
+        }.throws(AssertionError::class)
     }
 }
