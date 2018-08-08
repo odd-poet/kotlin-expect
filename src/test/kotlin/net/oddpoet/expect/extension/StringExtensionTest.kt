@@ -1,5 +1,6 @@
 package net.oddpoet.expect.extension
 
+import net.oddpoet.expect.InvalidExpectationError
 import net.oddpoet.expect.expect
 import net.oddpoet.expect.should
 import org.junit.Test
@@ -82,5 +83,18 @@ class StringExtensionTest {
         "hello".should.containChar('l')
         "hello".should.containChar('O', ignoreCase = true)
     }
+
+    @Test
+    fun `test haveLengthOf`() {
+        "abc".should.haveLengthOf(3)
+        "hello".should.haveLengthOf(5)
+    }
+
+    @Test
+    fun `test haveLengthBetween`() {
+        "abc".should.haveLengthIn(3..6)
+        "hello".should.not.haveLengthIn(1 until 5)
+    }
+
 
 }

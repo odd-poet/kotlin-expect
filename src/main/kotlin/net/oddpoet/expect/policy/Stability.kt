@@ -17,7 +17,7 @@ internal interface Stability {
     annotation class Stable
 
     /**
-     * Evolving.
+     * Experimental.
      *
      * Indicates that a feature under development.
      *
@@ -25,15 +25,15 @@ internal interface Stability {
      */
     @MustBeDocumented
     @Retention(AnnotationRetention.RUNTIME)
-    annotation class Evolving
+    annotation class Experimental
 
     /**
-     * Unstable.
+     * DoNotTrust.
      *
      * Not recommend to use.
      */
     @MustBeDocumented
     @Retention(AnnotationRetention.RUNTIME)
-    annotation class Unstable
+    annotation class DoNotTrust
 
 }
