@@ -65,6 +65,7 @@ class AnyExtensionTest {
         expect(subj).to.beInstanceOf(List::class)
         expect(subj).to.beInstanceOf(Collection::class)
         expect(subj).to.beInstanceOf(Iterable::class)
+        subj.should.not.beInstanceOf(Map::class)
     }
 
     @Test
