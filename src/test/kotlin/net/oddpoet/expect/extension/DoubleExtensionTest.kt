@@ -41,17 +41,17 @@ class DoubleExtensionTest {
     }
 
     @Test
-    fun `test beBetweenExclusive`() {
-        2.2.should.beBetweenExclusive(2.1, 2.3)
-        2.2.should.not.beBetweenExclusive(2.2, 2.3)
-        2.2.should.not.beBetweenExclusive(2.1, 2.2)
+    fun `test beIn the range`() {
+        2.2.should.beIn(2.1..2.3)
+        2.2.should.not.beIn(2.20000001..2.3)
+        2.2.should.not.beIn(2.1..2.19999999999)
     }
 
 
     @Test
     fun `test equalToWithin`() {
-        2.31231.should.equalToWithin(2.3, delta = 0.1)
-        3.14159.should.not.equalToWithin(3.15, delta = 0.001)
+        2.31231.should.equalToWithin(2.3, error = 0.1)
+        3.14159.should.not.equalToWithin(3.15, error = 0.001)
     }
 
 }

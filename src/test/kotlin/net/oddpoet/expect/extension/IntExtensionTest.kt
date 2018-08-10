@@ -41,10 +41,9 @@ class IntExtensionTest {
     }
 
     @Test
-    fun `test beBetweenExclusive`() {
-        2.should.beBetweenExclusive(1, 3)
-        2.should.not.beBetweenExclusive(2, 3)
-        2.should.not.beBetweenExclusive(1, 2)
+    fun `test beIn the range`() {
+        3.should.beIn(1..3)
+        3.should.beIn(3..5)
+        3.should.not.beIn(1 until 3)
     }
-
 }

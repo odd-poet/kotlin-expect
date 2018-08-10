@@ -25,6 +25,8 @@ interface Literalizer<T> {
             register(Char::class) { "'${unescape(it.toString())}'" }
             register(String::class) { "\"${unescape(it)}\"" }
             register(Regex::class) { "/$it/" }
+            register(Boolean::class) { "$it" }
+            register(Throwable::class) { "${it::class.qualifiedName}(message=\"${it.message}\")" }
             register(Array<Any?>::class) {
                 it.map { literal(it) }
                         .joinToString(separator = ",", prefix = "[", postfix = "]")
@@ -37,6 +39,7 @@ interface Literalizer<T> {
                 it.map { "${literal(it.key)}:${literal(it.value)}" }
                         .joinToString(separator = ",", prefix = "${it::class.simpleName}{", postfix = "}")
             }
+            register(ClosedRange::class) { "(${it.start}, ${it.endInclusive})" }
         }
 
         fun literal(value: Any?): String {
@@ -63,19 +66,18 @@ interface Literalizer<T> {
                         .replace("\r", "\\r")
                         .replace("\t", "\\t")
 
+
         internal class TypedLiteralizer<T : Any>
         constructor(val type: KClass<T>,
                     private val literalizer: Literalizer<T>) : Literalizer<Any> {
             override fun literal(value: Any): String {
                 if (!type.isInstance(value)) {
-                    throw IllegalArgumentException("wrong type! : " + value)
+                    throw IllegalArgumentException("wrong type! : $value")
                 }
+                @Suppress("UNCHECKED_CAST")
                 return literalizer.literal(value as T)
             }
         }
     }
 }
-
-
-
 

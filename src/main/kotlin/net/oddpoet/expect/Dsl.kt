@@ -23,7 +23,7 @@ fun <T : Any> expect(subject: T?) = Expectation(subject)
 /**
  * expect subject that ...
  */
-@Stability.Unstable
+@Stability.Stable
 fun <T : Any> expect(subject: T?, clause: (T) -> Unit) {
     if (subject == null) {
         throw RuntimeException("Cannot execute expect clause for null.")
@@ -38,3 +38,4 @@ fun <T : Any> expect(subject: T?, clause: (T) -> Unit) {
 @Stability.Stable
 val <T : Any> T?.should: Expect<T>
     get() = Expect(this)
+

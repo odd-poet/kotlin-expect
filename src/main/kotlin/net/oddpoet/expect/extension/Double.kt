@@ -29,14 +29,15 @@ fun Expect<Double>.beBetween(lower: Double, upper: Double) =
             it in lower..upper
         }
 
-fun Expect<Double>.beBetweenExclusive(lower: Double, upper: Double) =
-        satisfyThat("be between ${lower.literal} and ${upper.literal} exclusive") {
-            it > lower && it < upper
+fun Expect<Double>.beIn(range: ClosedRange<Double>) =
+        satisfyThat("be in the range of ${range.literal}") {
+            it in range
         }
 
-fun Expect<Double>.equalToWithin(value: Double, delta: Double) =
-        satisfyThat("equal to ${value.literal} within ±${delta.literal}") {
-            Math.abs(it - value) <= delta
+
+fun Expect<Double>.equalToWithin(value: Double, error: Double) =
+        satisfyThat("equal to ${value.literal} within ±${error.literal}") {
+            Math.abs(it - value) <= error
         }
 
 
