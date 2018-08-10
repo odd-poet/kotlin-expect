@@ -39,7 +39,7 @@ class LiteralizerTest {
 
     @Test
     fun `test for array`() {
-        Literalizer.literal(arrayOf(1L,2L,3L))
+        Literalizer.literal(arrayOf(1L, 2L, 3L))
                 .should.be("[1L,2L,3L]")
     }
 

@@ -1,6 +1,7 @@
 package net.oddpoet.expect
 
 /**
+ * Expectation.
  *
  * @author Yunsang Choi
  */

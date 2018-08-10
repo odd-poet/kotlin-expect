@@ -6,9 +6,9 @@ import java.util.*
 
 /**
  * Extension : Instant
+ *
  * @author Yunsang Choi
  */
-
 
 fun Expect<Instant>.beBefore(other: Instant) =
         satisfyThat("be before ${other.literal}") {

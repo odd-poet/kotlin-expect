@@ -2,9 +2,7 @@ package net.oddpoet.expect.extension
 
 import net.oddpoet.expect.should
 import org.junit.Test
-import java.time.Duration
 import java.time.Instant
-import java.time.temporal.TemporalUnit
 import java.util.*
 
 /**

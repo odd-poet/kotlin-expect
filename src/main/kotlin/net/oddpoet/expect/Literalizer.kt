@@ -1,6 +1,5 @@
 package net.oddpoet.expect
 
-import java.text.SimpleDateFormat
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
