@@ -33,8 +33,8 @@ internal constructor(private val subject: T?,
      * use it to define your expect vocabulary.
      */
     fun satisfyThat(description: String, predicate: (T) -> Boolean) {
-        satisfyThatForNullable(description) {
-            it?.let { predicate(it) } ?: false
+        satisfyThatForNullable(description) { subj ->
+            subj?.let { predicate(it) } ?: false
         }
     }
 
