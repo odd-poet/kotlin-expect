@@ -66,7 +66,7 @@ interface Literalizer<T> {
                         .replace("\r", "\\r")
                         .replace("\t", "\\t")
 
-        @Suppress("UNCHECKED_CAST")
+
         internal class TypedLiteralizer<T : Any>
         constructor(val type: KClass<T>,
                     private val literalizer: Literalizer<T>) : Literalizer<Any> {
@@ -74,6 +74,7 @@ interface Literalizer<T> {
                 if (!type.isInstance(value)) {
                     throw IllegalArgumentException("wrong type! : $value")
                 }
+                @Suppress("UNCHECKED_CAST")
                 return literalizer.literal(value as T)
             }
         }
