@@ -40,6 +40,7 @@ internal constructor(block: () -> Unit) {
             throw AssertionError("expected <$exceptionClass> to be thrown, but <${thrown::class}> was thrown.", thrown)
         }
         log.debug("${thrown.literal} has been thrown (expected:<$exceptionClass>) : OK")
+        @Suppress("UNCHECKED_CAST")
         clause(thrown as T)
     }
 
