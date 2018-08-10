@@ -41,15 +41,16 @@ class FloatExtensionTest {
     }
 
     @Test
-    fun `test beBetweenExclusive`() {
-        2f.should.beBetweenExclusive(1f, 3f)
-        2f.should.not.beBetweenExclusive(2f, 3f)
-        2f.should.not.beBetweenExclusive(1f, 2f)
+    fun `test beIn the range`() {
+        3f.should.beIn(3f..4f)
+        3f.should.beIn(2.9f..3f)
+        3f.should.not.beIn(3.00001f..3.1f)
+        3f.should.not.beIn(2f..2.999999f)
     }
 
     @Test
     fun `test equalToWithin`() {
-        2.31231f.should.equalToWithin(2.3f, delta = 0.1)
-        3.14159f.should.not.equalToWithin(3.15f, delta = 0.001)
+        2.31231f.should.equalToWithin(2.3f, error = 0.1)
+        3.14159f.should.not.equalToWithin(3.15f, error = 0.001)
     }
 }

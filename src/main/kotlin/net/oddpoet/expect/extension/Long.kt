@@ -29,9 +29,9 @@ fun Expect<Long>.beBetween(lower: Long, upper: Long) =
             it in lower..upper
         }
 
-fun Expect<Long>.beBetweenExclusive(lower: Long, upper: Long) =
-        satisfyThat("be between ${lower.literal} and ${upper.literal} exclusive") {
-            it in (lower + 1)..(upper - 1)
+fun Expect<Long>.beIn(range: ClosedRange<Long>) =
+        satisfyThat("be in the range of ${range.literal}") {
+            it in range
         }
 
 

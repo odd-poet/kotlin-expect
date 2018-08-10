@@ -95,6 +95,4 @@ class StringExtensionTest {
         "abc".should.haveLengthIn(3..6)
         "hello".should.not.haveLengthIn(1 until 5)
     }
-
-
 }

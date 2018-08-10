@@ -39,6 +39,7 @@ interface Literalizer<T> {
                 it.map { "${literal(it.key)}:${literal(it.value)}" }
                         .joinToString(separator = ",", prefix = "${it::class.simpleName}{", postfix = "}")
             }
+            register(ClosedRange::class) { "(${it.start}, ${it.endInclusive})" }
         }
 
         fun literal(value: Any?): String {
@@ -65,12 +66,13 @@ interface Literalizer<T> {
                         .replace("\r", "\\r")
                         .replace("\t", "\\t")
 
+        @Suppress("UNCHECKED_CAST")
         internal class TypedLiteralizer<T : Any>
         constructor(val type: KClass<T>,
                     private val literalizer: Literalizer<T>) : Literalizer<Any> {
             override fun literal(value: Any): String {
                 if (!type.isInstance(value)) {
-                    throw IllegalArgumentException("wrong type! : " + value)
+                    throw IllegalArgumentException("wrong type! : $value")
                 }
                 return literalizer.literal(value as T)
             }

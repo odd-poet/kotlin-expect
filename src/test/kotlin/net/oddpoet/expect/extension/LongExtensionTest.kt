@@ -41,10 +41,9 @@ class LongExtensionTest {
     }
 
     @Test
-    fun `test beBetweenExclusive`() {
-        2L.should.beBetweenExclusive(1, 3)
-        2L.should.not.beBetweenExclusive(2, 3)
-        2L.should.not.beBetweenExclusive(1, 2)
+    fun `test beIn the range`() {
+        3L.should.beIn(1..3L)
+        3L.should.beIn(3..4L)
+        3L.should.not.beIn(1 until 3L)
     }
-
 }

@@ -72,6 +72,6 @@ fun Expect<String>.haveLengthOf(length: Int) =
         }
 
 fun Expect<String>.haveLengthIn(range: IntRange) =
-        satisfyThat("have length between ${range.first} and ${range.last}") {
-            range.contains(it.length)
+        satisfyThat("have length in the range $range") {
+            it.length in range
         }
