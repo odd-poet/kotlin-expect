@@ -7,7 +7,7 @@ import java.nio.charset.Charset
 /**
  * Extension : InputStream
  *
- * @author mitchell.geek
+ * @author Yunsang Choi
  */
 
 fun <T : InputStream> Expect<T>.equalAsText(text: String, charset: Charset = Charsets.UTF_8) =

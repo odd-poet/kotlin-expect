@@ -1,5 +1,11 @@
 package net.oddpoet.expect
 
+import java.text.SimpleDateFormat
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.util.*
 import kotlin.reflect.KClass
 
 /**
@@ -39,7 +45,11 @@ interface Literalizer<T> {
                 it.map { "${literal(it.key)}:${literal(it.value)}" }
                         .joinToString(separator = ",", prefix = "${it::class.simpleName}{", postfix = "}")
             }
-            register(ClosedRange::class) { "(${it.start}, ${it.endInclusive})" }
+            register(ClosedRange::class) { "(${literal(it.start)}, ${literal(it.endInclusive)})" }
+            // time
+            register(Instant::class) { "Instant<${timeFormatter.format(it)}>" }
+            register(Date::class) { "Date<${timeFormatter.format(it.toInstant())}>" }
+            register(LocalDateTime::class) { "LocalDateTime<${timeFormatter.format(it)}>" }
         }
 
         fun literal(value: Any?): String {
@@ -65,6 +75,10 @@ interface Literalizer<T> {
                         .replace("\n", "\\n")
                         .replace("\r", "\\r")
                         .replace("\t", "\\t")
+
+        private val timeFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
+                .withLocale(Locale.ENGLISH)
+                .withZone(ZoneId.systemDefault())
 
         @Suppress("UNCHECKED_CAST")
         internal class TypedLiteralizer<T : Any>
