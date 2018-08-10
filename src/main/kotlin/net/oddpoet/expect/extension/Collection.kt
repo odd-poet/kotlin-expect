@@ -2,7 +2,11 @@ package net.oddpoet.expect.extension
 
 import net.oddpoet.expect.Expect
 
-
+/**
+ * Extension: Collection
+ *
+ * @author Yunsang Choi
+ */
 fun <E : Any?, T : Iterable<E>> Expect<T>.contain(item: E?) =
         satisfyThat("contain <${item.literal}>") {
             it.contains(item)

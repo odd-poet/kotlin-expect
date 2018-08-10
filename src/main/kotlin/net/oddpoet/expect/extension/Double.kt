@@ -2,6 +2,11 @@ package net.oddpoet.expect.extension
 
 import net.oddpoet.expect.Expect
 
+/**
+ * Extension: Double
+ *
+ * @author Yunsang Choi
+ */
 fun Expect<Double>.beGreaterThan(other: Double) =
         satisfyThat("be greater than ${other.literal}") {
             it > other

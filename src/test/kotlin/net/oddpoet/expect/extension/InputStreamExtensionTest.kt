@@ -5,7 +5,7 @@ import org.junit.Test
 
 /**
  *
- * @author mitchell.geek
+ * @author Yunsang Choi
  */
 class InputStreamExtensionTest {
     @Test

@@ -5,6 +5,7 @@ package net.oddpoet.expect.policy
  *
  * It is used to indicate the maturity of a class, interface or method.
  *
+ * @author Yunsang Choi
  */
 internal interface Stability {
     /**

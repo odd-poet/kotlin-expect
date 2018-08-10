@@ -3,6 +3,7 @@ package net.oddpoet.expect.extension
 import net.oddpoet.expect.Expect
 
 /**
+ *  Extension: Throwable
  *
  * @author Yunsang Choi
  */

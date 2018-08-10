@@ -20,7 +20,7 @@ internal constructor(block: () -> Unit) {
     } catch (e: Throwable) {
         e
     }
-    private val log : Logger = LoggerFactory.getLogger(this.javaClass)
+    private val log: Logger = LoggerFactory.getLogger(this.javaClass)
 
     /**
      * Test type of exception.
