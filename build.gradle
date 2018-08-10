@@ -81,6 +81,7 @@ bintray {
             vcsTag = "v${project.version}"
             gpg {
                 sign = true
+                passphrase = prop('gpg.passphrase', 'you know nothing, jon snow')
                 // passphrase = 'you know nothing, jon snow'
             }
             mavenCentralSync {
