@@ -11,6 +11,6 @@ import java.nio.charset.Charset
  */
 
 fun <T : InputStream> Expect<T>.equalAsText(text: String, charset: Charset = Charsets.UTF_8) =
-        satisfyThat("equal to $text as text") {
+        satisfyThat("equal to ${text.literal} as text") {
             it.reader(charset).readText() == text
         }
