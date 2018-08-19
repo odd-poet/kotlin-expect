@@ -14,7 +14,7 @@ infix fun <T : Any> Expect<T>.beSameInstance(value: Any?) =
             it === value
         }
 
-infix fun <T : Any> Expect<T>.be(value: Any?) =
+infix fun <T : Any> Expect<T>.be(value: T?) =
         satisfyThatForNullable("be <${value.literal}>") {
             it == value
         }
