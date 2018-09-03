@@ -33,7 +33,7 @@ internal constructor(block: () -> Unit) {
                                clause: (T) -> Unit = {}) {
         if (thrown == null) {
             log.debug("No exception had been thrown : FAIL")
-            throw AssertionError("expected to occur a exception<$exceptionClass> bu no exception was thrown.")
+            throw AssertionError("expected to occur a exception<$exceptionClass> but no exception was thrown.")
         }
         if (!exceptionClass.isInstance(thrown)) {
             log.debug("${thrown.literal} has been thrown, but expected <$exceptionClass> : FAIL")
