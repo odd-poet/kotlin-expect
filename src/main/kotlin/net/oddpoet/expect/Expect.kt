@@ -57,7 +57,7 @@ internal constructor(private val subject: T?,
 
 
     // Expect class scoped extension (for print object in assertion message)
-    internal val <X : Any?> X.literal: String
+    val <X : Any?> X.literal: String
         get() = Literalizer.literal(this)
 
     @Deprecated("DO NOT USE")
