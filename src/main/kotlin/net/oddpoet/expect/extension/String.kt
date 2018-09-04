@@ -68,10 +68,10 @@ fun Expect<String>.match(regex: String) = match(Regex(regex))
 
 fun Expect<String>.haveLengthOf(length: Int) =
         satisfyThat("have length of ${length.literal}") {
-            it.length == length
+            it.length.asTestProp("length") == length
         }
 
 fun Expect<String>.haveLengthIn(range: IntRange) =
         satisfyThat("have length in the range $range") {
-            it.length in range
+            it.length.asTestProp("length") in range
         }

@@ -10,11 +10,11 @@ import net.oddpoet.expect.Expect
 
 fun <T : Throwable> Expect<T>.haveMessage(expectMessage: String?) =
         satisfyThat("has message of ${expectMessage.literal}") {
-            it.message == expectMessage
+            it.message.asTestProp("message") == expectMessage
         }
 
 fun <T : Throwable> Expect<T>.haveNoMessage() =
         satisfyThat("has no message") {
-            it.message == null
+            it.message.asTestProp("message") == null
         }
 

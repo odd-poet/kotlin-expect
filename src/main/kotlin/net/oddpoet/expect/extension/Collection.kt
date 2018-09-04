@@ -35,7 +35,7 @@ fun <E : Any?, T : Collection<E>> Expect<T>.containAll(vararg items: E) =
 
 fun <T : Collection<*>> Expect<T>.haveSizeOf(size: Int) =
         satisfyThat("have size of <${size.literal}>") {
-            it.size == size
+            it.size.asTestProp("size") == size
         }
 
 fun <T : Collection<*>> Expect<T>.beEmpty() =
