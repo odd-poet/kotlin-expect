@@ -104,3 +104,8 @@ fun <K : Any?, V : Any, T : Map<K, V>> Expect<T>.containEntries(vararg pairs: Pa
             pairs.all { pair -> it.containsKey(pair.first) && it[pair.first] == pair.second }
         }
 
+fun <K : Any?, V : Any, T : Map<K, V>> Expect<T>.haveEntries(size: Int) =
+        satisfyThat("have size of <${size.literal}>") {
+            it.size.asTestProp("size") == size
+        }
+

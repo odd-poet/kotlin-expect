@@ -33,16 +33,15 @@ interface Literalizer<T> {
             register(Boolean::class) { "$it" }
             register(Throwable::class) { "${it::class.qualifiedName}" }
             register(Array<Any?>::class) {
-                it.map { literal(it) }
-                        .joinToString(separator = ",", prefix = "[", postfix = "]")
+                it.map { literal(it) }.joinToStringAutoWrap(separator = ",", prefix = "[", postfix = "]")
             }
             register(Collection::class) {
                 it.map { literal(it) }
-                        .joinToString(separator = ",", prefix = "${it::class.simpleName}(", postfix = ")")
+                        .joinToStringAutoWrap(separator = ",", prefix = "${it::class.simpleName}(", postfix = ")")
             }
             register(Map::class) {
                 it.map { "${literal(it.key)}:${literal(it.value)}" }
-                        .joinToString(separator = ",", prefix = "${it::class.simpleName}{", postfix = "}")
+                        .joinToStringAutoWrap(separator = ",", prefix = "${it::class.simpleName}{", postfix = "}")
             }
             register(ClosedRange::class) { "(${literal(it.start)}, ${literal(it.endInclusive)})" }
             // time
@@ -67,6 +66,14 @@ interface Literalizer<T> {
             register(type, object : Literalizer<T> {
                 override fun literal(value: T): String = block(value)
             })
+        }
+
+        private fun List<String>.joinToStringAutoWrap(separator: String, prefix: String, postfix: String): String {
+            return if (this.sumBy { it.length } > 80) {
+                joinToString(separator + "\n\t", prefix + "\n\t", "\n" + postfix)
+            } else {
+                joinToString(separator, prefix, postfix)
+            }
         }
 
         private fun unescape(string: String) =
