@@ -64,9 +64,9 @@ interface Literalizer<T> {
         }
 
         fun <T : Any> register(type: KClass<T>, block: (T) -> String) {
-            list.add(TypedLiteralizer(type, object : Literalizer<T> {
+            register(type, object : Literalizer<T> {
                 override fun literal(value: T): String = block(value)
-            }))
+            })
         }
 
         private fun unescape(string: String) =
