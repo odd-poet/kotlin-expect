@@ -13,4 +13,14 @@ class InputStreamExtensionTest {
         val inputStream = "hello".byteInputStream()
         inputStream.should.equalAsText("hello")
     }
+
+    @Test
+    fun `test contain text`() {
+        "hello world".byteInputStream().should.contain("hello")
+        "hello world".byteInputStream().should.contain("world")
+        "hello world".byteInputStream().should.not.contain("HELLo")
+        "hello world".byteInputStream().should.contain("HELLo", ignoreCase = true)
+    }
+
+
 }
