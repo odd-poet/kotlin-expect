@@ -86,4 +86,16 @@ class ArrayExtensionTest {
         arrayOf("world", "HI", "hello").should.beReverseSortedWith(String.CASE_INSENSITIVE_ORDER)
         arrayOf("hello", "HI", "world").should.not.beReverseSortedWith(String.CASE_INSENSITIVE_ORDER)
     }
+
+    @Test
+    fun `test huge array print with multiline`() {
+        // check log
+        arrayOf(
+                "Alice's Adventures in Wonderland is an 1865 novel written by English author Charles Lutwidge Dodgson under the pseudonym Lewis Carroll.",
+                "Alice's Adventures in Wonderland is an 1865 novel written by English author Charles Lutwidge Dodgson under the pseudonym Lewis Carroll.",
+                "Alice's Adventures in Wonderland is an 1865 novel written by English author Charles Lutwidge Dodgson under the pseudonym Lewis Carroll.",
+                "Alice's Adventures in Wonderland is an 1865 novel written by English author Charles Lutwidge Dodgson under the pseudonym Lewis Carroll.",
+                "Alice's Adventures in Wonderland is an 1865 novel written by English author Charles Lutwidge Dodgson under the pseudonym Lewis Carroll."
+        ).should.haveSizeOf(5)
+    }
 }

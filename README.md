@@ -8,7 +8,7 @@
 
 ```gradle
 dependencies {
-    testCompile("net.oddpoet:kotlin-expect:1.2.0")
+    testCompile("net.oddpoet:kotlin-expect:1.2.1")
 }
 ```
 

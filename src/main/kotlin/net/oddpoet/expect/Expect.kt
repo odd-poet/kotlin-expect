@@ -1,5 +1,6 @@
 package net.oddpoet.expect
 
+import net.oddpoet.expect.policy.Stability
 import org.slf4j.LoggerFactory
 
 /**
@@ -67,6 +68,7 @@ internal constructor(private val subject: T?,
         val asText: String by lazy { "$name=${value.literal}" }
     }
 
+    @Stability.Experimental
     fun <X : Any?> X.asTestProp(name: String): X {
         testProp = Prop(name, this)
         return this
