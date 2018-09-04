@@ -61,17 +61,17 @@ fun Expect<File>.haveNameOf(name: String) =
 
 fun Expect<File>.haveExtensionOf(extension: String) =
         satisfyThat("have extension of <${extension.literal}>") {
-            it.extension == extension
+            it.extension.asTestProp("extension") == extension
         }
 
 fun Expect<File>.bePathOf(path: String) =
         satisfyThat("be path of <${path.literal}>") {
-            it.path == path
+            it.path.asTestProp("path") == path
         }
 
 fun Expect<File>.haveLengthOf(length: Long) =
         satisfyThat("have length of <${length.literal}>") {
-            it.length() == length
+            it.length().asTestProp("length") == length
         }
 
 fun Expect<File>.startWith(other: File) =

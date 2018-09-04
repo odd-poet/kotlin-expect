@@ -16,6 +16,7 @@ internal constructor(private val subject: T?,
     val not: Expect<T> by lazy { Expect(subject, !negative, verb + " not") }
     private val log = LoggerFactory.getLogger(this.javaClass)
 
+
     /**
      * test given predicate.
      *
@@ -43,18 +44,46 @@ internal constructor(private val subject: T?,
      * but it could be test nullable.
      */
     fun satisfyThatForNullable(description: String, predicate: (T?) -> Boolean) {
+        initTestProp()
         if (predicate(subject) == negative) {
-            log.debug("${subject.literal} $verb $description : FAIL")
+            log.debug("$subjectAsText $verb $description : FAIL")
             throw AssertionError(errorMessage(description))
         } else {
-            log.debug("${subject.literal} $verb $description : OK")
+            log.debug("$subjectAsText $verb $description : OK")
         }
     }
 
     private fun errorMessage(description: String): String {
-        return "It $verb $description, but it was <${subject.literal}>."
+        return "It $verb $description, but it was <$subjectAsText>."
     }
 
+
+    //--------------------------------
+    // property of subject to test
+    //--------------------------------
+    private var testProp: Prop? = null
+
+    private inner class Prop(val name: String, val value: Any?) {
+        val asText: String by lazy { "$name=${value.literal}" }
+    }
+
+    fun <X : Any?> X.asTestProp(name: String): X {
+        testProp = Prop(name, this)
+        return this
+    }
+
+    private fun initTestProp() {
+        testProp = null
+    }
+
+    private val subjectAsText: String
+        get() {
+            return if (testProp == null) {
+                subject.literal
+            } else {
+                "${subject.literal}(${testProp!!.asText})"
+            }
+        }
 
     // Expect class scoped extension (for print object in assertion message)
     val <X : Any?> X.literal: String
