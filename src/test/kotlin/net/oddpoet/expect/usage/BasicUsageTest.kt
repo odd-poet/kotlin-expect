@@ -1,10 +1,7 @@
 package net.oddpoet.expect.usage
 
 import net.oddpoet.expect.expect
-import net.oddpoet.expect.extension.be
-import net.oddpoet.expect.extension.beBlankOrNull
-import net.oddpoet.expect.extension.endWith
-import net.oddpoet.expect.extension.startWith
+import net.oddpoet.expect.extension.*
 import net.oddpoet.expect.should
 import org.junit.Test
 import org.slf4j.LoggerFactory
@@ -84,6 +81,15 @@ class BasicUsageTest {
                 message?.contains("should be a greeting") ?: false
             }
         }
+    }
+
+    @Test
+    fun `expect(subj) {} could not use for null`() {
+        expect {
+            expect(null) {
+                it.should.beNull()
+            }
+        }.throws()
     }
 
     @Test
