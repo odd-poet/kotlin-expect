@@ -1,4 +1,3 @@
-
 # Created by https://www.gitignore.io/api/java,macos,gradle,kotlin,intellij+all
 # Edit at https://www.gitignore.io/?templates=java,macos,gradle,kotlin,intellij+all
 
@@ -70,9 +69,12 @@ fabric.properties
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
 
+<<<<<<< HEAD
 # JetBrains templates
 **___jb_tmp___
 
+=======
+>>>>>>> ad5eb23 (upgradle kotlin : 1.2.70)
 ### Intellij+all Patch ###
 # Ignores the whole .idea folder and all .iml files
 # See https://github.com/joeblau/gitignore.io/issues/186 and https://github.com/joeblau/gitignore.io/issues/360
