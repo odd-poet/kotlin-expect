@@ -54,4 +54,13 @@ class LiteralizerTest {
         Literalizer.literal(linkedMapOf("KOREA" to "SEOUL", "SPAIN" to "MADRID"))
                 .should.be("LinkedHashMap{\"KOREA\":\"SEOUL\",\"SPAIN\":\"MADRID\"}")
     }
+
+    @Test
+    fun `test for throwable`() {
+        val aException = NoSuchElementException("it's just test")
+
+        Literalizer.literal(aException)
+                .should.be("java.util.NoSuchElementException(message=\"it's just test\")")
+    }
+
 }
