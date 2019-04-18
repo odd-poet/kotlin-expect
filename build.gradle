@@ -25,7 +25,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'com.jfrog.bintray'
 
 group 'net.oddpoet'
-version '1.2.1'
+version '1.2.2'
 description 'rspec style assertion library for kotlin test'
 
 sourceCompatibility = 1.6
