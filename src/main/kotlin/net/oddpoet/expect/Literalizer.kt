@@ -31,7 +31,7 @@ interface Literalizer<T> {
             register(String::class) { "\"${unescape(it)}\"" }
             register(Regex::class) { "/$it/" }
             register(Boolean::class) { "$it" }
-            register(Throwable::class) { "${it::class.qualifiedName}" }
+            register(Throwable::class) { "${it::class.qualifiedName}(message=${literal(it.message)})" }
             register(Array<Any?>::class) {
                 it.map { literal(it) }.joinToStringAutoWrap(separator = ",", prefix = "[", postfix = "]")
             }
