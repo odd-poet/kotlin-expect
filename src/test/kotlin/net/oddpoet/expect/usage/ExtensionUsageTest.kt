@@ -3,7 +3,7 @@ package net.oddpoet.expect.usage
 import net.oddpoet.expect.Expect
 import net.oddpoet.expect.expect
 import net.oddpoet.expect.should
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import java.time.LocalDate
 
 class ExtensionUsageTest {

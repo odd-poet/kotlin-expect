@@ -1,7 +1,7 @@
 package net.oddpoet.expect.extension
 
 import net.oddpoet.expect.should
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import java.time.Instant
 import java.util.*
 
