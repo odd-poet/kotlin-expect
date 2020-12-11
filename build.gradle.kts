@@ -1,4 +1,4 @@
-import java.util.Date
+import java.util.*
 
 plugins {
     java
@@ -6,6 +6,7 @@ plugins {
     id("maven-publish")
     id("com.jfrog.bintray")
     jacoco
+    idea
 }
 
 group = "net.oddpoet"
@@ -16,8 +17,8 @@ description = "rspec style assertion library for kotlin test"
  * Dependency versions
  */
 val kotlinVersion: String by project // from gradle.properties
-val junitVersion = "4.12"
-val slf4jVersion = "1.7.25"
+val junit5Version = "5.6.2"
+val slf4jVersion = "1.7.30"
 val logbackVersion = "1.2.3"
 val jacocoToolVersion = "0.8.5"
 
@@ -27,24 +28,35 @@ repositories {
 }
 
 dependencies {
-    api("org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion")
-    api("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
+    compileOnly(kotlin("stdlib-jdk8"))
+    compileOnly(kotlin("reflect"))
     api("org.slf4j:slf4j-api:$slf4jVersion")
 
-    testImplementation("org.jetbrains.kotlin:kotlin-test:$kotlinVersion")
-    testImplementation("junit:junit:$junitVersion")
-    testImplementation("ch.qos.logback:logback-classic:$logbackVersion")
+    // testing
+    testRuntimeOnly(kotlin("stdlib-jdk8"))
+    testRuntimeOnly(kotlin("reflect"))
+    testApi(kotlin("test"))
+    testApi(kotlin("test-junit5"))
+    testApi("org.junit.jupiter:junit-jupiter-api:$junit5Version")
+    testApi("org.junit.jupiter:junit-jupiter-params:$junit5Version")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junit5Version")
+    testRuntimeOnly("ch.qos.logback:logback-classic:$logbackVersion")
 }
+
 tasks {
     compileKotlin {
         kotlinOptions.apiVersion = "1.4"
         kotlinOptions.languageVersion = "1.4"
-        kotlinOptions.jvmTarget = "1.6"
+        kotlinOptions.jvmTarget = "1.8"
     }
     compileTestKotlin {
         kotlinOptions.apiVersion = "1.4"
         kotlinOptions.languageVersion = "1.4"
-        kotlinOptions.jvmTarget = "1.6"
+        kotlinOptions.jvmTarget = "1.8"
+    }
+    configure<JavaPluginConvention> {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     val sourcesJar by registering(Jar::class) {
         dependsOn("classes")
@@ -64,6 +76,7 @@ tasks {
     }
 
     test {
+        useJUnitPlatform()
         testLogging {
             events("passed", "skipped", "failed")
         }

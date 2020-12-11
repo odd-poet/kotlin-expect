@@ -2,7 +2,7 @@ package net.oddpoet.expect.usage
 
 import net.oddpoet.expect.Expect
 import net.oddpoet.expect.expect
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 

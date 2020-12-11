@@ -3,7 +3,8 @@ package net.oddpoet.expect.usage
 import net.oddpoet.expect.expect
 import net.oddpoet.expect.extension.*
 import net.oddpoet.expect.should
-import org.junit.Test
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.slf4j.LoggerFactory
 import java.io.IOException
 import java.nio.file.NoSuchFileException
@@ -12,11 +13,13 @@ import java.nio.file.NoSuchFileException
 class BasicUsageTest {
     val log = LoggerFactory.getLogger(this.javaClass)
 
-    @Test(expected = AssertionError::class)
+    @Test
     fun `it should fail when any exception did not occurred`() {
-        expect {
-            // do nothing.
-        }.throws()
+        assertThrows<AssertionError> {
+            expect {
+                // do nothing.
+            }.throws()
+        }
     }
 
     @Test
@@ -33,11 +36,13 @@ class BasicUsageTest {
         }.throws(IOException::class)
     }
 
-    @Test(expected = AssertionError::class)
+    @Test
     fun `it should verify wrong exception type thrown in code block`() {
-        expect {
-            throw IOException()
-        }.throws(NoSuchFileException::class)
+        assertThrows<AssertionError> {
+            expect {
+                throw IOException()
+            }.throws(NoSuchFileException::class)
+        }
     }
 
     @Test
@@ -73,7 +78,7 @@ class BasicUsageTest {
         expect {
             expect("thanks").to.satisfyThat("be a greeting") {
                 arrayOf("hello", "aloha", "안녕")
-                        .contains(it)
+                    .contains(it)
             }
         }.throws(AssertionError::class) {
             it.should.satisfy {
