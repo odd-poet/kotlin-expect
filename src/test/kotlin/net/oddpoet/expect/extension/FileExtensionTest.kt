@@ -1,8 +1,8 @@
 package net.oddpoet.expect.extension
 
 import net.oddpoet.expect.should
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.File
@@ -18,7 +18,7 @@ class FileExtensionTest {
     lateinit var dir: File
     lateinit var file: File
 
-    @Before
+    @BeforeEach
     fun setUp() {
         dir = Files.createTempDirectory("test").toFile()
         file = File(dir, "dummy.txt")

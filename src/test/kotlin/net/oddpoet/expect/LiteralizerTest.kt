@@ -1,7 +1,7 @@
 package net.oddpoet.expect
 
 import net.oddpoet.expect.extension.be
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import java.util.*
 
 class LiteralizerTest {

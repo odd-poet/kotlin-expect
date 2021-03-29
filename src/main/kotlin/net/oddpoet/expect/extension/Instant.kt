@@ -1,8 +1,12 @@
 package net.oddpoet.expect.extension
 
 import net.oddpoet.expect.Expect
+import java.time.Duration
 import java.time.Instant
+import java.time.temporal.ChronoUnit
+import java.time.temporal.TemporalAmount
 import java.util.*
+import kotlin.math.abs
 
 /**
  * Extension : Instant
@@ -35,3 +39,7 @@ fun Expect<Instant>.beIn(range: ClosedRange<Instant>) =
             it in range
         }
 
+fun Expect<Instant>.beApproximatedTo(other: Instant, marginOfError: TemporalAmount) =
+    satisfyThat("be approximated to ${other.literal} within ${marginOfError.literal}") {
+        it in (other.minus(marginOfError)..other.plus(marginOfError))
+    }

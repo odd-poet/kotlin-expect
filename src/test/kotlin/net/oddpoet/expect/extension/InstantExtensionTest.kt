@@ -1,7 +1,8 @@
 package net.oddpoet.expect.extension
 
 import net.oddpoet.expect.should
-import org.junit.Test
+import org.junit.jupiter.api.Test
+import java.time.Duration
 import java.time.Instant
 import java.util.*
 
@@ -73,4 +74,16 @@ class InstantExtensionTest {
         instant.should.beIn(Instant.ofEpochMilli(2000)..Instant.ofEpochMilli(3000))
         instant.should.not.beIn(Instant.ofEpochMilli(2000)..Instant.ofEpochMilli(2999))
     }
+
+    @Test
+    fun `test beApproximatedTo`() {
+        // Given
+        val instant = Instant.ofEpochMilli(3000)
+
+        // When
+        // Then
+        instant.should.beApproximatedTo(Instant.ofEpochMilli(2000), Duration.ofMillis(1000))
+        instant.should.not.beApproximatedTo(Instant.ofEpochMilli(2000), Duration.ofMillis(500))
+    }
+
 }
