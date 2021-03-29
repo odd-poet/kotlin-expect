@@ -5,13 +5,14 @@ import net.oddpoet.expect.expect
 import net.oddpoet.expect.should
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
+import kotlin.contracts.ExperimentalContracts
 
 class ExtensionUsageTest {
 
     @Test
     fun `you can define own your assertion syntax`() {
         // then you can use your assertion.
-        val emp: Employee = Employee(
+        val emp: Employee? = Employee(
                 "yunsang.choi",
                 LocalDate.of(1976, 4, 2),
                 "X00000",
