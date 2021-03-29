@@ -10,7 +10,7 @@ plugins {
 }
 
 group = "net.oddpoet"
-version = "1.3.0"
+version = "1.3.1-SNAPSHOT"
 description = "rspec style assertion library for kotlin test"
 
 /**
