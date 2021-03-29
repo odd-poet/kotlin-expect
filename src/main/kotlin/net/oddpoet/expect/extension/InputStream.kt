@@ -21,4 +21,3 @@ fun <T : InputStream> Expect<T>.contain(text: String, ignoreCase: Boolean = fals
             it.reader(charset).readText().asTestProp("content").contains(text, ignoreCase)
         }
 
-//

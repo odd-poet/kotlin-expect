@@ -35,6 +35,11 @@ interface Literalizer<T> {
             register(Array<Any?>::class) {
                 it.map { literal(it) }.joinToStringAutoWrap(separator = ",", prefix = "[", postfix = "]")
             }
+            register(ByteArray::class) {
+                it.joinToString(separator = " ", prefix = "[", postfix = "]") { byte ->
+                    String.format("0x%02X", byte)
+                }
+            }
             register(Collection::class) {
                 it.map { literal(it) }
                         .joinToStringAutoWrap(separator = ",", prefix = "${it::class.simpleName}(", postfix = ")")
