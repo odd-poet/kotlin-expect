@@ -1,9 +1,6 @@
 package net.oddpoet.expect
 
-import java.time.Instant
-import java.time.LocalDateTime
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
+import java.time.temporal.Temporal
 import java.util.*
 import kotlin.reflect.KClass
 
@@ -11,6 +8,10 @@ import kotlin.reflect.KClass
  * Object to literal.
  *
  * it will be used to print an object as part of assertion message.
+ *
+ * IMPORTANT:
+ *  Literalizer is only used internally(by companion object).
+ *  So user cannot register own custom literalizer.
  *
  * @author Yunsang Choi
  */
@@ -42,24 +43,23 @@ interface Literalizer<T> {
             }
             register(Collection::class) {
                 it.map { literal(it) }
-                        .joinToStringAutoWrap(separator = ",", prefix = "${it::class.simpleName}(", postfix = ")")
+                    .joinToStringAutoWrap(separator = ",", prefix = "${it::class.simpleName}(", postfix = ")")
             }
             register(Map::class) {
                 it.map { "${literal(it.key)}:${literal(it.value)}" }
-                        .joinToStringAutoWrap(separator = ",", prefix = "${it::class.simpleName}{", postfix = "}")
+                    .joinToStringAutoWrap(separator = ",", prefix = "${it::class.simpleName}{", postfix = "}")
             }
             register(ClosedRange::class) { "(${literal(it.start)}, ${literal(it.endInclusive)})" }
             // time
-            register(Instant::class) { "Instant<${timeFormatter.format(it)}>" }
-            register(Date::class) { "Date<${timeFormatter.format(it.toInstant())}>" }
-            register(LocalDateTime::class) { "LocalDateTime<${timeFormatter.format(it)}>" }
+            register(Temporal::class) { "${it.javaClass.simpleName}<$it>" }
+            register(Date::class) { "Date<$it>" }
         }
 
         fun literal(value: Any?): String {
             return value?.let {
                 list.firstOrNull { it.type.isInstance(value) }
-                        ?.literal(value)
-                        ?: it.toString() // no literalizer for given value.
+                    ?.literal(value)
+                    ?: it.toString() // no literalizer for given value.
             } ?: "null"
         }
 
@@ -82,18 +82,15 @@ interface Literalizer<T> {
         }
 
         private fun unescape(string: String) =
-                string.replace("\\", "\\\\")
-                        .replace("\n", "\\n")
-                        .replace("\r", "\\r")
-                        .replace("\t", "\\t")
+            string.replace("\\", "\\\\")
+                .replace("\n", "\\n")
+                .replace("\r", "\\r")
+                .replace("\t", "\\t")
 
-        private val timeFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
-                .withLocale(Locale.ENGLISH)
-                .withZone(ZoneId.systemDefault())
-
-        internal class TypedLiteralizer<T : Any>
-        constructor(val type: KClass<T>,
-                    private val literalizer: Literalizer<T>) : Literalizer<Any> {
+        internal class TypedLiteralizer<T : Any>(
+            val type: KClass<T>,
+            private val literalizer: Literalizer<T>
+        ) : Literalizer<Any> {
             override fun literal(value: Any): String {
                 if (!type.isInstance(value)) {
                     throw IllegalArgumentException("wrong type! : $value")
