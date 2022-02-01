@@ -4,6 +4,7 @@ import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
+import java.time.temporal.Temporal
 import java.util.*
 import kotlin.reflect.KClass
 
@@ -50,9 +51,8 @@ interface Literalizer<T> {
             }
             register(ClosedRange::class) { "(${literal(it.start)}, ${literal(it.endInclusive)})" }
             // time
-            register(Instant::class) { "Instant<${timeFormatter.format(it)}>" }
-            register(Date::class) { "Date<${timeFormatter.format(it.toInstant())}>" }
-            register(LocalDateTime::class) { "LocalDateTime<${timeFormatter.format(it)}>" }
+            register(Temporal::class) { "${it.javaClass.simpleName}<$it>" }
+            register(Date::class) { "Date<$it>" }
         }
 
         fun literal(value: Any?): String {
