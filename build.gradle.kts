@@ -1,9 +1,11 @@
 plugins {
-    java
+    `java-library`
     kotlin("jvm")
     id("maven-publish")
+    id("io.github.gradle-nexus.publish-plugin") version "1.0.0"
     jacoco
     idea
+    signing
 }
 
 group = "net.oddpoet"
@@ -30,6 +32,11 @@ dependencies {
     testRuntimeOnly(libs.logback.classic)
 }
 
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
 tasks {
     compileKotlin {
         kotlinOptions.apiVersion = "1.4"
@@ -45,23 +52,6 @@ tasks {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-    val sourcesJar by registering(Jar::class) {
-        dependsOn("classes")
-        archiveClassifier.set("sources")
-        from(sourceSets["main"].allSource)
-    }
-
-    val javadocJar by registering(Jar::class) {
-        dependsOn(JavaPlugin.JAVADOC_TASK_NAME)
-        archiveClassifier.set("javadoc")
-        from(javadoc)
-    }
-
-    artifacts {
-        add("archives", sourcesJar)
-        add("archives", javadocJar)
-    }
-
     test {
         useJUnitPlatform()
         testLogging {
@@ -83,52 +73,6 @@ tasks {
 }
 
 
-fun prop(name: String, defaultValue: String): String {
-    return if (project.hasProperty(name)) {
-        project.property(name) as String
-    } else {
-        defaultValue
-    }
-}
-
-//bintray {
-//    user = prop("bintray.user", "WHORU")
-//    key = prop("bintray.key", "NO-BINTRAY-KEY")
-//    pkg.apply {
-//        repo = "maven"
-//        name = project.name
-//        setLicenses("Apache-2.0")
-//        setLabels("kotlin", "expect", "rspec")
-//
-//        websiteUrl = "https://github.com/odd-poet/kotlin-expect"
-//        issueTrackerUrl = "https://github.com/odd-poet/kotlin-expect/issues"
-//        vcsUrl = "https://github.com/odd-poet/kotlin-expect.git"
-//
-//        publicDownloadNumbers = true
-//        version.apply {
-//            name = project.version.toString()
-//            desc = project.description
-//            released = Date().toString()
-//            vcsTag = "v${project.version}"
-//            gpg.apply {
-//                sign = true
-//                passphrase = prop("gpg.passphrase", "you know nothing, jon snow")
-//            }
-//            mavenCentralSync.apply {
-//                sync = true //[Default: true] Determines whether to sync the version to Maven Central.
-//                user = prop("oss.user.token", "WHO-ARE-YOU")
-//                password = prop("oss.user.password", "NO-PASSWORD")
-//                //Optional property. By default the staging repository is closed and artifacts are released to Maven Central. You can optionally turn this behaviour off (by puting 0 as value) and release the version manually.
-//                close = "1"
-//            }
-//        }
-//    }
-//    setPublications("maven")
-//    dryRun = false
-//    publish = true
-//    override = true
-//}
-
 publishing {
     publications {
         create<MavenPublication>("maven") {
@@ -136,8 +80,6 @@ publishing {
             groupId = project.group.toString()
             artifactId = project.name
             version = project.version.toString()
-            artifact(tasks["sourcesJar"])
-            artifact(tasks["javadocJar"])
             pom {
                 name.set(project.name)
                 description.set(project.description)
@@ -162,3 +104,14 @@ publishing {
         }
     }
 }
+
+nexusPublishing {
+    repositories {
+        sonatype()
+    }
+}
+
+signing {
+    sign(publishing.publications["maven"])
+}
+
