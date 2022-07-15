@@ -31,8 +31,8 @@ enableFeaturePreview("VERSION_CATALOGS")
 dependencyResolutionManagement {
     versionCatalogs {
         create("libs") {
-            version("slf4j", "1.7.35")
-            version("logback", "1.2.10")
+            version("slf4j", "1.7.36")
+            version("logback", "1.2.11")
             version("junit5", "5.8.2")
             version("jacoco-tool", "0.8.7")
 
