@@ -2,14 +2,14 @@ plugins {
     `java-library`
     kotlin("jvm")
     id("maven-publish")
-    id("io.github.gradle-nexus.publish-plugin") version "1.0.0"
+    id("io.github.gradle-nexus.publish-plugin")
     jacoco
     idea
     signing
 }
 
 group = "net.oddpoet"
-version = "1.3.1"
+version = "1.3.2-SNAPSHOT"
 description = "rspec style assertion library for kotlin test"
 
 repositories {

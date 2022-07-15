@@ -6,11 +6,15 @@ rootProject.name = "kotlin-expect"
  * version 정보는 `gradle.properties`에서 관리.
  */
 pluginManagement {
-    val kotlinPluginVersion: String by settings
+    val kotlinVersion: String by settings
+    val nexusPublishPluginVersion: String by settings
 
     plugins {
         // kotlin
-        kotlin("jvm") version kotlinPluginVersion
+        kotlin("jvm") version kotlinVersion
+
+        // publish
+        id("io.github.gradle-nexus.publish-plugin") version nexusPublishPluginVersion
         id("maven-publish")
     }
 }
