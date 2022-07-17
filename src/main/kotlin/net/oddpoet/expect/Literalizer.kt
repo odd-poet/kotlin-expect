@@ -24,36 +24,36 @@ interface Literalizer<T> {
         init {
             // register built-in literalizers.
             // the order of those is important!
-            register(Int::class) { "$it" }
-            register(Long::class) { "${it}L" }
-            register(Double::class) { "$it" }
-            register(Float::class) { "${it}f" }
-            register(Char::class) { "'${unescape(it.toString())}'" }
-            register(String::class) { "\"${unescape(it)}\"" }
-            register(Regex::class) { "/$it/" }
-            register(Boolean::class) { "$it" }
-            register(Throwable::class) { "${it::class.qualifiedName}(message=${literal(it.message)})" }
-            register(Array<Any?>::class) { array ->
+            register<Int> { "$it" }
+            register<Long> { "${it}L" }
+            register<Double> { "$it" }
+            register<Float> { "${it}f" }
+            register<Char> { "'${unescape(it.toString())}'" }
+            register<String> { "\"${unescape(it)}\"" }
+            register<Regex> { "/$it/" }
+            register<Boolean> { "$it" }
+            register<Throwable> { "${it::class.qualifiedName}(message=${literal(it.message)})" }
+            register<Array<Any?>> { array ->
                 array.map { literal(it) }
                     .joinToStringAutoWrap(separator = ",", prefix = "[", postfix = "]")
             }
-            register(ByteArray::class) { bytes ->
+            register<ByteArray> { bytes ->
                 bytes.joinToString(separator = " ", prefix = "[", postfix = "]") { byte ->
                     String.format("0x%02X", byte)
                 }
             }
-            register(Collection::class) { collection ->
+            register<Collection<Any?>> { collection ->
                 collection.map { literal(it) }
                     .joinToStringAutoWrap(separator = ",", prefix = "${collection::class.simpleName}(", postfix = ")")
             }
-            register(Map::class) { map ->
+            register<Map<Any?, Any?>> { map ->
                 map.map { "${literal(it.key)}:${literal(it.value)}" }
                     .joinToStringAutoWrap(separator = ",", prefix = "${map::class.simpleName}{", postfix = "}")
             }
-            register(ClosedRange::class) { "(${literal(it.start)}, ${literal(it.endInclusive)})" }
+            register<ClosedRange<Comparable<Any?>>> { "(${literal(it.start)}, ${literal(it.endInclusive)})" }
             // time
-            register(Temporal::class) { "${it.javaClass.simpleName}<$it>" }
-            register(Date::class) { "Date<$it>" }
+            register<Temporal> { "${it.javaClass.simpleName}<$it>" }
+            register<Date> { "Date<$it>" }
         }
 
         fun literal(value: Any?): String {
@@ -68,14 +68,15 @@ interface Literalizer<T> {
             list.add(TypedLiteralizer(type, literalizer))
         }
 
-        fun <T : Any> register(type: KClass<T>, block: (T) -> String) {
-            register(type, object : Literalizer<T> {
+        inline fun <reified T : Any> register(crossinline block: (T) -> String) {
+            register(T::class, object : Literalizer<T> {
                 override fun literal(value: T): String = block(value)
             })
         }
 
+
         private fun List<String>.joinToStringAutoWrap(separator: String, prefix: String, postfix: String): String {
-            return if (sumBy { it.length } > 80) {
+            return if (sumOf { it.length } > 80) {
                 joinToString(separator + "\n\t", prefix + "\n\t", "\n" + postfix)
             } else {
                 joinToString(separator, prefix, postfix)
@@ -90,7 +91,7 @@ interface Literalizer<T> {
 
         internal class TypedLiteralizer<T : Any>(
             val type: KClass<T>,
-            private val literalizer: Literalizer<T>
+            private val literalizer: Literalizer<T>,
         ) : Literalizer<Any> {
             override fun literal(value: Any): String {
                 if (!type.isInstance(value)) {

@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     `java-library`
     kotlin("jvm")
@@ -39,14 +41,20 @@ java {
 
 tasks {
     compileKotlin {
-        kotlinOptions.apiVersion = "1.4"
-        kotlinOptions.languageVersion = "1.4"
-        kotlinOptions.jvmTarget = "1.8"
+        kotlinOptions {
+            apiVersion = "1.5"
+            languageVersion = "1.5"
+            jvmTarget = "1.8"
+            freeCompilerArgs = listOf("-Xjsr305=strict", "-opt-in=kotlin.RequiresOptIn")
+        }
     }
     compileTestKotlin {
-        kotlinOptions.apiVersion = "1.4"
-        kotlinOptions.languageVersion = "1.4"
-        kotlinOptions.jvmTarget = "1.8"
+        kotlinOptions {
+            apiVersion = "1.5"
+            languageVersion = "1.5"
+            jvmTarget = "1.8"
+            freeCompilerArgs = listOf("-Xjsr305=strict", "-opt-in=kotlin.RequiresOptIn")
+        }
     }
     configure<JavaPluginExtension> {
         sourceCompatibility = JavaVersion.VERSION_1_8

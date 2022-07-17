@@ -1,6 +1,7 @@
 package net.oddpoet.expect.usage
 
 import net.oddpoet.expect.expect
+import net.oddpoet.expect.expectThrows
 import net.oddpoet.expect.extension.*
 import net.oddpoet.expect.should
 import org.junit.jupiter.api.Test
@@ -18,7 +19,7 @@ class BasicUsageTest {
         assertThrows<AssertionError> {
             expect {
                 // do nothing.
-            }.throws()
+            }.throws<Exception>()
         }
     }
 
@@ -26,14 +27,23 @@ class BasicUsageTest {
     fun `it should verify exception type thrown in code block`() {
         expect {
             throw IOException()
-        }.throws(IOException::class)
+        }.throws<Exception> {
+            it.should.beInstanceOf<IOException>()
+        }
+    }
+
+    @Test
+    fun `it should verify exception type thrown in code block by expectThrows`() {
+        expectThrows<IOException> {
+            throw IOException()
+        }
     }
 
     @Test
     fun `it should verify exception type thrown in code block by super class`() {
         expect {
             throw NoSuchFileException("/dummy")
-        }.throws(IOException::class)
+        }.throws<IOException>()
     }
 
     @Test
@@ -49,7 +59,7 @@ class BasicUsageTest {
     fun `it should verify exception object`() {
         expect {
             throw IOException("fake exception")
-        }.throws(IOException::class) {
+        }.throws<IOException> {
             it.message.should.be("fake exception")
         }
     }
@@ -58,7 +68,7 @@ class BasicUsageTest {
     fun `it should use Exception class as default when given type`() {
         expect {
             throw Exception("hello")
-        }.throws()
+        }.throws<Exception>()
     }
 
     @Test
@@ -115,4 +125,5 @@ class BasicUsageTest {
             it.should.endWith("o")
         }
     }
+
 }

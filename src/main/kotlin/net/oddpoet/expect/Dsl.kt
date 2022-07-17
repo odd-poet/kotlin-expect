@@ -1,6 +1,9 @@
 package net.oddpoet.expect
 
 import net.oddpoet.expect.policy.Stability
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.InvocationKind
+import kotlin.contracts.contract
 
 /**
  * DSL entry points.
@@ -12,7 +15,21 @@ import net.oddpoet.expect.policy.Stability
  * expect exception while executing code block
  */
 @Stability.Stable
-fun expect(block: () -> Unit) = ErrorExpectation(block)
+fun expect(block: () -> Unit): ErrorExpectation {
+    return ErrorExpectation(block)
+}
+
+/**
+ * expect exception while executing code block (another version)
+ */
+@Stability.Stable
+@OptIn(ExperimentalContracts::class)
+inline fun <reified T : Throwable> expectThrows(noinline block: () -> Unit) {
+    contract {
+        callsInPlace(block, InvocationKind.EXACTLY_ONCE)
+    }
+    expect(block).throws<T>()
+}
 
 /**
  * expect subject to...
@@ -24,7 +41,12 @@ fun <T : Any> expect(subject: T?) = Expectation(subject)
  * expect subject that ...
  */
 @Stability.Stable
+@OptIn(ExperimentalContracts::class)
 fun <T : Any> expect(subject: T?, clause: (T) -> Unit) {
+    contract {
+        returns() implies (subject != null)
+        callsInPlace(clause, InvocationKind.EXACTLY_ONCE)
+    }
     if (subject == null) {
         throw RuntimeException("Cannot execute expect clause for null.")
     }

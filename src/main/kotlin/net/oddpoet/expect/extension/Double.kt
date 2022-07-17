@@ -1,6 +1,7 @@
 package net.oddpoet.expect.extension
 
 import net.oddpoet.expect.Expect
+import kotlin.math.abs
 
 /**
  * Extension: Double
@@ -42,7 +43,7 @@ fun Expect<Double>.beIn(range: ClosedRange<Double>) =
 
 fun Expect<Double>.equalToWithin(value: Double, error: Double) =
         satisfyThat("equal to ${value.literal} within ±${error.literal}") {
-            Math.abs(it - value) <= error
+            abs(it - value) <= error
         }
 
 

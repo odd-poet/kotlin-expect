@@ -12,11 +12,14 @@ import org.slf4j.LoggerFactory
  */
 class Expect<T : Any>
 internal constructor(
-    private val subject: T?,
-    private val negative: Boolean = false,
-    private val verb: String = "should"
+    internal val subject: T?,
+    internal val negative: Boolean = false,
 ) {
-    val not: Expect<T> by lazy { Expect(subject, !negative, "$verb not") }
+    private val verb: String = when (negative) {
+        true -> "should not"
+        false -> "should"
+    }
+    val not: Expect<T> by lazy { Expect(subject, !negative) }
     private val log = LoggerFactory.getLogger(this.javaClass)
 
 
