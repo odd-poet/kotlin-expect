@@ -29,8 +29,10 @@ internal constructor(block: () -> Unit) {
      * if not, it will throw AssertionError.
      *
      */
-    fun <T : Throwable> throws(exceptionClass: KClass<out T>,
-                               clause: (T) -> Unit = {}) {
+    fun <T : Throwable> throws(
+        exceptionClass: KClass<out T>,
+        clause: (T) -> Unit = {},
+    ) {
         if (thrown == null) {
             log.debug("No exception had been thrown : FAIL")
             throw AssertionError("expected to occur a exception<$exceptionClass> but no exception was thrown.")
@@ -44,6 +46,15 @@ internal constructor(block: () -> Unit) {
         clause(thrown as T)
     }
 
+
+    /**
+     * reified version.
+     */
+    @JvmName("reifiedThrows")
+    inline fun <reified T : Throwable> throws(noinline clause: (T) -> Unit = {}) {
+        throws(T::class, clause)
+    }
+
     /**
      * short-cut method.
      *
@@ -51,7 +62,6 @@ internal constructor(block: () -> Unit) {
     fun throws(clause: (Exception) -> Unit = {}) {
         throws(Exception::class, clause)
     }
-
 
     // Expect class scoped extension (for print object in assertion message)
     internal val <X : Any?> X.literal: String

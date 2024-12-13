@@ -6,11 +6,15 @@ rootProject.name = "kotlin-expect"
  * version 정보는 `gradle.properties`에서 관리.
  */
 pluginManagement {
-    val kotlinPluginVersion: String by settings
+    val kotlinVersion: String by settings
+    val nexusPublishPluginVersion: String by settings
 
     plugins {
         // kotlin
-        kotlin("jvm") version kotlinPluginVersion
+        kotlin("jvm") version kotlinVersion
+
+        // publish
+        id("io.github.gradle-nexus.publish-plugin") version nexusPublishPluginVersion
         id("maven-publish")
     }
 }
@@ -27,8 +31,8 @@ enableFeaturePreview("VERSION_CATALOGS")
 dependencyResolutionManagement {
     versionCatalogs {
         create("libs") {
-            version("slf4j", "1.7.35")
-            version("logback", "1.2.10")
+            version("slf4j", "1.7.36")
+            version("logback", "1.2.11")
             version("junit5", "5.8.2")
             version("jacoco-tool", "0.8.7")
 

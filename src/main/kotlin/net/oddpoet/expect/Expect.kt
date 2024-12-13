@@ -12,11 +12,14 @@ import org.slf4j.LoggerFactory
  */
 class Expect<T : Any>
 internal constructor(
-    private val subject: T?,
-    private val negative: Boolean = false,
-    private val verb: String = "should"
+    internal val subject: T?,
+    internal val negative: Boolean = false,
 ) {
-    val not: Expect<T> by lazy { Expect(subject, !negative, "$verb not") }
+    private val verb: String = when (negative) {
+        true -> "should not"
+        false -> "should"
+    }
+    val not: Expect<T> by lazy { Expect(subject, !negative) }
     private val log = LoggerFactory.getLogger(this.javaClass)
 
 
@@ -93,16 +96,19 @@ internal constructor(
     val <X : Any?> X.literal: String
         get() = Literalizer.literal(this)
 
+    @Suppress("POTENTIALLY_NON_REPORTED_ANNOTATION")
     @Deprecated("DO NOT USE")
     override fun equals(other: Any?): Boolean {
         throw RuntimeException("DO NOT USE THIS METHOD")
     }
 
+    @Suppress("POTENTIALLY_NON_REPORTED_ANNOTATION")
     @Deprecated("DO NOT USE")
     override fun hashCode(): Int {
         throw RuntimeException("DO NOT USE THIS METHOD")
     }
 
+    @Suppress("POTENTIALLY_NON_REPORTED_ANNOTATION")
     @Deprecated("DO NOT USE")
     override fun toString(): String {
         throw RuntimeException("DO NOT USE THIS METHOD")

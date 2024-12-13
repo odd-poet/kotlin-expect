@@ -28,4 +28,15 @@ class ExceptionExtensionTest {
             it.should.haveMessage(null) // same above
         }
     }
+
+    @Test
+    fun `test exception has cause`() {
+        expect {
+            throw RuntimeException("forced", IllegalArgumentException("cause"))
+        }.throws {
+            it.should.haveCause(IllegalArgumentException::class)
+            it.should.haveCause(RuntimeException::class)
+            it.should.haveCause(Throwable::class)
+        }
+    }
 }
