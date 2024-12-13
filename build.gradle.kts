@@ -78,7 +78,6 @@ tasks {
     }
 }
 
-
 publishing {
     publications {
         create<MavenPublication>("maven") {
