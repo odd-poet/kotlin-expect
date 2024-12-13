@@ -15,7 +15,7 @@ import kotlin.reflect.KClass
  *
  * @author Yunsang Choi
  */
-interface Literalizer<T> {
+fun interface Literalizer<T> {
     fun literal(value: T): String
 
     companion object Registry {
@@ -69,9 +69,7 @@ interface Literalizer<T> {
         }
 
         inline fun <reified T : Any> register(crossinline block: (T) -> String) {
-            register(T::class, object : Literalizer<T> {
-                override fun literal(value: T): String = block(value)
-            })
+            register(T::class, { block(it) })
         }
 
 
@@ -94,9 +92,7 @@ interface Literalizer<T> {
             private val literalizer: Literalizer<T>,
         ) : Literalizer<Any> {
             override fun literal(value: Any): String {
-                if (!type.isInstance(value)) {
-                    throw IllegalArgumentException("wrong type! : $value")
-                }
+                require(type.isInstance(value)) { "wrong type! : $value" }
                 @Suppress("UNCHECKED_CAST")
                 return literalizer.literal(value as T)
             }

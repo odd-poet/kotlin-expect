@@ -96,16 +96,19 @@ internal constructor(
     val <X : Any?> X.literal: String
         get() = Literalizer.literal(this)
 
+    @Suppress("POTENTIALLY_NON_REPORTED_ANNOTATION")
     @Deprecated("DO NOT USE")
     override fun equals(other: Any?): Boolean {
         throw RuntimeException("DO NOT USE THIS METHOD")
     }
 
+    @Suppress("POTENTIALLY_NON_REPORTED_ANNOTATION")
     @Deprecated("DO NOT USE")
     override fun hashCode(): Int {
         throw RuntimeException("DO NOT USE THIS METHOD")
     }
 
+    @Suppress("POTENTIALLY_NON_REPORTED_ANNOTATION")
     @Deprecated("DO NOT USE")
     override fun toString(): String {
         throw RuntimeException("DO NOT USE THIS METHOD")
