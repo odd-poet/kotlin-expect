@@ -40,3 +40,4 @@ fun Expect<Instant>.beApproximatedTo(other: Instant, marginOfError: TemporalAmou
     satisfyThat("be approximated to ${other.literal} within ${marginOfError.literal}") {
         it in (other.minus(marginOfError)..other.plus(marginOfError))
     }
+
