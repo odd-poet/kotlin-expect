@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     `java-library`
     kotlin("jvm")
@@ -11,7 +9,7 @@ plugins {
 }
 
 group = "net.oddpoet"
-version = "1.3.2-SNAPSHOT"
+version = "1.3.2"
 description = "rspec style assertion library for kotlin test"
 
 repositories {
@@ -79,7 +77,6 @@ tasks {
         finalizedBy(jacocoTestReport)
     }
 }
-
 
 publishing {
     publications {
