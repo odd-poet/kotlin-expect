@@ -1,8 +1,6 @@
 package net.oddpoet.expect.extension
 
 import net.oddpoet.expect.Expect
-import kotlin.contracts.ExperimentalContracts
-import kotlin.contracts.contract
 import kotlin.reflect.KClass
 
 /**
@@ -37,7 +35,7 @@ infix fun <T : Any> Expect<T>.beInstanceOf(type: KClass<*>) =
         type.isInstance(it)
     }
 
-inline fun <reified S: Any> Expect<*>.beInstanceOf() =
+inline fun <reified S : Any> Expect<*>.beInstanceOf() =
     satisfyThatForNullable("be instance of <${S::class.literal}>") {
         S::class.isInstance(it)
     }
